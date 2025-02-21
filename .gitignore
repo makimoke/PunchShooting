@@ -1,0 +1,14 @@
+Library/*
+Logs/*
+Temp/*
+obj/*
+.vs/*
+.idea/*
+Roms/*
+.DS_Store
+UserSettings/*
+*.sln
+Assembly-CSharp-Editor.csproj
+Assembly-CSharp.csproj
+*.csproj
+Roms.zip
