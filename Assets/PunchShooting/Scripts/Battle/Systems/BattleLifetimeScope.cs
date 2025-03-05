@@ -22,6 +22,7 @@ namespace PunchShooting.Battle.Systems
             builder.RegisterComponent(battleFieldView);
             builder.Register<PlayerResourceProvider>(Lifetime.Singleton);
             builder.Register<PlayerShipViewController>(Lifetime.Singleton);
+            builder.Register<PlayerBulletViewCreator>(Lifetime.Singleton);
             builder.Register<PlayerScoreDataAccessor>(Lifetime.Singleton);
             builder.Register<PlayerStatusDataAccessor>(Lifetime.Singleton);
             builder.Register<StageStatusDataAccessor>(Lifetime.Singleton);
