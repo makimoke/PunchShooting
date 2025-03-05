@@ -137,7 +137,7 @@ namespace PunchShooting.Battle.Scenes
             {
                 Context._stageStatusDataAccessor.Status = StageStatusDataAccessor.StageStatus.GameOver;
                 Context.WaitSecondsAction(1.0f,
-                    () => { StateMachine.SendEvent((int)StateEventId.Retry); });
+                    () => { StateMachine.SendEvent((int)StateEventId.Retry); }).Forget();
             }
         }
 
@@ -147,7 +147,7 @@ namespace PunchShooting.Battle.Scenes
             {
                 Context._stageStatusDataAccessor.Status = StageStatusDataAccessor.StageStatus.StageClear;
                 Context.WaitSecondsAction(1.0f,
-                    () => { StateMachine.SendEvent((int)StateEventId.Finish); });
+                    () => { StateMachine.SendEvent((int)StateEventId.Finish); }).Forget();
             }
         }
     }
