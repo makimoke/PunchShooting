@@ -13,8 +13,8 @@ namespace PunchShooting.Battle.Views.Player
     public class PlayerResourceProvider : IDisposable
     {
         private readonly BattleFieldView _battleFieldView;
-        private Dictionary<PlayerResourceDefinition.PrefabId, GameObject> _prefabDictionary = new();
-        private Dictionary<PlayerResourceDefinition.SpriteId, Sprite> _spriteDictionary = new();
+        private readonly Dictionary<PlayerResourceDefinition.PrefabId, GameObject> _prefabDictionary = new();
+        private readonly Dictionary<PlayerResourceDefinition.SpriteId, Sprite> _spriteDictionary = new();
 
         [Inject]
         public PlayerResourceProvider(BattleFieldView battleFieldView)
@@ -28,7 +28,7 @@ namespace PunchShooting.Battle.Views.Player
             {
                 Addressables.Release(prefab);
             }
-            
+
             foreach (var sprites in _spriteDictionary.Values)
             {
                 Addressables.Release(sprites);
@@ -39,7 +39,7 @@ namespace PunchShooting.Battle.Views.Player
         {
             //プレハブ
             _prefabDictionary[PlayerResourceDefinition.PrefabId.Ship] = await Addressables.LoadAssetAsync<GameObject>("Assets/PunchShooting/Prefabs/PlayerShip.prefab").Task;
-            
+
             //スプライト
             _spriteDictionary[PlayerResourceDefinition.SpriteId.Bul001] = await Addressables.LoadAssetAsync<Sprite>("Assets/PunchShooting/Sprites/spr_pbul_001.png").Task;
             _spriteDictionary[PlayerResourceDefinition.SpriteId.Bul002] = await Addressables.LoadAssetAsync<Sprite>("Assets/PunchShooting/Sprites/spr_pbul_002.png").Task;
@@ -54,6 +54,11 @@ namespace PunchShooting.Battle.Views.Player
         public void DestroyPlayerShip(PlayerShipView playerShipView)
         {
             Object.Destroy(playerShipView.gameObject);
+        }
+
+        public GameObject FindPrefab(PlayerResourceDefinition.PrefabId prefabId)
+        {
+            return _prefabDictionary[prefabId];
         }
 
         public Sprite FindSprite(PlayerResourceDefinition.SpriteId spriteId)
