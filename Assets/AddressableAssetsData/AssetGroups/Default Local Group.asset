@@ -22,6 +22,26 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e8140196843394b49a1b26dfec2bc7ce
+    m_Address: Assets/PunchShooting/Sprites/spr_pbul_001.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 95bee4f99a3bd4643801eacd414f5c2e
+    m_Address: Assets/PunchShooting/Sprites/spr_pbul_002.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b06d95b0f5dd02f49ab36c03c4b24a62
+    m_Address: Assets/PunchShooting/Sprites/spr_player_001.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e5d83341ce4becf479aa3289846aa23b
+    m_Address: Assets/PunchShooting/Prefabs/PlayerBullet.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3455c58033bbf914391f600f2b9244ca, type: 2}
   m_SchemaSet:
