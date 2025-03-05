@@ -39,6 +39,7 @@ namespace PunchShooting.Battle.Views.Player
         {
             //プレハブ
             _prefabDictionary[PlayerResourceDefinition.PrefabId.Ship] = await Addressables.LoadAssetAsync<GameObject>("Assets/PunchShooting/Prefabs/PlayerShip.prefab").Task;
+            _prefabDictionary[PlayerResourceDefinition.PrefabId.Bul] = await Addressables.LoadAssetAsync<GameObject>("Assets/PunchShooting/Prefabs/PlayerBullet.prefab").Task;
 
             //スプライト
             _spriteDictionary[PlayerResourceDefinition.SpriteId.Bul001] = await Addressables.LoadAssetAsync<Sprite>("Assets/PunchShooting/Sprites/spr_pbul_001.png").Task;

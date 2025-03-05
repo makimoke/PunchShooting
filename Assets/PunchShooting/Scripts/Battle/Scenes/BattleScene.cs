@@ -113,7 +113,7 @@ namespace PunchShooting.Battle.Scenes
 
             protected override void Update()
             {
-                Context._playerShipViewController.Update();
+                Context._playerShipViewController.Update(Time.deltaTime);
 
                 //Context._stageEnemyGenerator.Update(Time.deltaTime);
 
