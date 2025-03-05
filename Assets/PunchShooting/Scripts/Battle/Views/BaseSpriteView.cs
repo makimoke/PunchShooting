@@ -7,6 +7,8 @@ namespace PunchShooting.Battle.Views
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
 
+        public Vector3 Position => transform.localPosition;
+
         public void AddPosition(Vector3 vector)
         {
             transform.localPosition += vector;
