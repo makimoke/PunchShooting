@@ -1,4 +1,5 @@
 using PunchShooting.Battle.Data;
+using PunchShooting.Battle.Logic;
 using PunchShooting.Battle.Scenes;
 using PunchShooting.Battle.Views;
 using PunchShooting.Battle.Views.Player;
@@ -26,6 +27,10 @@ namespace PunchShooting.Battle.Systems
             builder.Register<PlayerScoreDataAccessor>(Lifetime.Singleton);
             builder.Register<PlayerStatusDataAccessor>(Lifetime.Singleton);
             builder.Register<StageStatusDataAccessor>(Lifetime.Singleton);
+            builder.Register<PlayerBulletStatusDataAccessor>(Lifetime.Singleton);
+            builder.Register<EnemyStatusDataAccessor>(Lifetime.Singleton);
+            builder.Register<InstanceIdGenerator>(Lifetime.Singleton);
+            builder.Register<PlayerBulletStatusLogic>(Lifetime.Singleton);
         }
     }
 }
