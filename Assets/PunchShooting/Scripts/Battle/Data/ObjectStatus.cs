@@ -10,8 +10,9 @@ namespace PunchShooting.Battle.Data
             Str = str;
         }
 
-        public ObjectStatus(ObjectBaseParam baseParam)
+        public ObjectStatus(long instanceId, ObjectBaseParam baseParam)
         {
+            InstanceId = instanceId;
             Hp = baseParam.Hp;
             Str = baseParam.Str;
             Score = baseParam.Score;
@@ -20,7 +21,7 @@ namespace PunchShooting.Battle.Data
         }
 
         public long InstanceId { get; set; } // インスタンスID
-        
+
         // パラメータ
         public int Hp { get; set; } // 体力
         public int Str { get; set; } // 攻撃力
