@@ -19,7 +19,7 @@ namespace PunchShooting.Battle.Views.Player
             _playerResourceProvider = playerResourceProvider;
         }
 
-        public PlayerBulletView CreateBullet(PlayerResourceDefinition.PrefabId prefabId, PlayerResourceDefinition.SpriteId spriteId, Vector3 position)
+        public PlayerBulletView CreateBullet(long instanceId, PlayerResourceDefinition.PrefabId prefabId, PlayerResourceDefinition.SpriteId spriteId, Vector3 position)
         {
             if (!_bulletPrefab)
             {
@@ -31,6 +31,7 @@ namespace PunchShooting.Battle.Views.Player
             bulletObject.transform.localPosition = position;
             var playerBulletView = bulletObject.GetComponent<PlayerBulletView>();
             playerBulletView.SetSprite(_playerResourceProvider.FindSprite(spriteId));
+            playerBulletView.InstanceId = instanceId;
 
             return playerBulletView;
         }
