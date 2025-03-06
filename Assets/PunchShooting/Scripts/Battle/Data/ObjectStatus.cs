@@ -19,6 +19,8 @@ namespace PunchShooting.Battle.Data
             MoveVector = baseParam.MoveVector.normalized;
         }
 
+        public long InstanceId { get; set; } // インスタンスID
+        
         // パラメータ
         public int Hp { get; set; } // 体力
         public int Str { get; set; } // 攻撃力
