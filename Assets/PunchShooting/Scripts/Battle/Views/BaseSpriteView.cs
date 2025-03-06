@@ -7,15 +7,15 @@ namespace PunchShooting.Battle.Views
     public abstract class BaseSpriteView : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
-        public readonly Subject<SpriteCollisionResult> OnTriggerEnterSubject = new();
+        public readonly Subject<Collider2D> OnTriggerEnterSubject = new();
 
         public long InstanceId { get; set; }
 
         public Vector3 Position => transform.localPosition;
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        private void OnTriggerEnter2D(Collider2D collider)
         {
-            OnTriggerEnterSubject.OnNext(new SpriteCollisionResult(InstanceId, collision));
+            OnTriggerEnterSubject.OnNext(collider);
         }
 
         public void AddPosition(Vector3 vector)
