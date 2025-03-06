@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using PunchShooting.Battle.Definitions.Player;
+using R3;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using VContainer;
@@ -20,6 +21,7 @@ namespace PunchShooting.Battle.Views.Player
         private readonly PlayerInput _playerInput;
         private readonly PlayerResourceProvider _playerResourceProvider;
         private float _bulletCounter = ShotTimeInterval;
+        private DisposableBag _disposableBag;
         private PlayerShipView _playerShipView;
 
 
@@ -35,6 +37,7 @@ namespace PunchShooting.Battle.Views.Player
 
         public void Dispose()
         {
+            _disposableBag.Dispose();
         }
 
         public void Initialize()
@@ -60,6 +63,9 @@ namespace PunchShooting.Battle.Views.Player
                 var bulletView = _playerBulletViewCreator.CreateBullet(PlayerResourceDefinition.PrefabId.Bul, PlayerResourceDefinition.SpriteId.Bul001,
                     new Vector3(-0.6f, 0.38f, 0.0f) + _playerShipView.Position);
                 _bulletViews.Add(bulletView);
+                bulletView.OnTriggerEnterSubject
+                    .Subscribe(collisionResult => { Debug.Log("Enemy On:" + collisionResult.Collider.tag); })
+                    .AddTo(ref _disposableBag);
             }
 
             UpdateBullets(deltaTime);
