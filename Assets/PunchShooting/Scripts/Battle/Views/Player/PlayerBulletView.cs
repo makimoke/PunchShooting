@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace PunchShooting.Battle.Views.Player
 {
     //自弾
