@@ -38,17 +38,17 @@ namespace PunchShooting.Battle.Views.Player
         public async UniTask LoadAsync()
         {
             //プレハブ
-            _prefabDictionary[PlayerResourceDefinition.PrefabId.Ship] = await Addressables.LoadAssetAsync<GameObject>("Assets/PunchShooting/Prefabs/PlayerShip.prefab").Task;
-            _prefabDictionary[PlayerResourceDefinition.PrefabId.Bul] = await Addressables.LoadAssetAsync<GameObject>("Assets/PunchShooting/Prefabs/PlayerBullet.prefab").Task;
+            _prefabDictionary[PlayerResourceDefinition.PrefabId.PShip] = await Addressables.LoadAssetAsync<GameObject>("Assets/PunchShooting/Prefabs/PlayerShip.prefab").Task;
+            _prefabDictionary[PlayerResourceDefinition.PrefabId.PBul] = await Addressables.LoadAssetAsync<GameObject>("Assets/PunchShooting/Prefabs/PlayerBullet.prefab").Task;
 
             //スプライト
-            _spriteDictionary[PlayerResourceDefinition.SpriteId.Bul001] = await Addressables.LoadAssetAsync<Sprite>("Assets/PunchShooting/Sprites/spr_pbul_001.png").Task;
-            _spriteDictionary[PlayerResourceDefinition.SpriteId.Bul002] = await Addressables.LoadAssetAsync<Sprite>("Assets/PunchShooting/Sprites/spr_pbul_002.png").Task;
+            _spriteDictionary[PlayerResourceDefinition.SpriteId.PBul001] = await Addressables.LoadAssetAsync<Sprite>("Assets/PunchShooting/Sprites/spr_pbul_001.png").Task;
+            _spriteDictionary[PlayerResourceDefinition.SpriteId.PBul002] = await Addressables.LoadAssetAsync<Sprite>("Assets/PunchShooting/Sprites/spr_pbul_002.png").Task;
         }
 
         public PlayerShipView InstantiatePlayerShip()
         {
-            var playerShipObj = Object.Instantiate(_prefabDictionary[PlayerResourceDefinition.PrefabId.Ship], _battleFieldView.Transform);
+            var playerShipObj = Object.Instantiate(_prefabDictionary[PlayerResourceDefinition.PrefabId.PShip], _battleFieldView.Transform);
             return playerShipObj.GetComponent<PlayerShipView>();
         }
 

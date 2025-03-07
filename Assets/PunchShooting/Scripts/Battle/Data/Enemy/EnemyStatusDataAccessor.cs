@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 
-namespace PunchShooting.Battle.Data
+namespace PunchShooting.Battle.Data.Enemy
 {
     //敵ステータス
     public class EnemyStatusDataAccessor
     {
         private readonly Dictionary<long, ObjectStatus> _statusDictionary = new();
 
-        public void AddStatus(long instanceId, ObjectStatus status)
+        public void AddStatus(ObjectStatus status)
         {
-            _statusDictionary[instanceId] = status;
+            _statusDictionary[status.InstanceId] = status;
         }
 
         public void RemoveStatus(long instanceId)

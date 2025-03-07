@@ -96,7 +96,7 @@ namespace PunchShooting.Battle.Views.Player
 
         public void CreateBullet(long instanceId)
         {
-            var bulletView = _playerBulletViewCreator.CreateBullet(instanceId, PlayerResourceDefinition.PrefabId.Bul, PlayerResourceDefinition.SpriteId.Bul001,
+            var bulletView = _playerBulletViewCreator.CreateBullet(instanceId, PlayerResourceDefinition.PrefabId.PBul, PlayerResourceDefinition.SpriteId.PBul001,
                 new Vector3(-0.6f, 0.38f, 0.0f) + _playerShipView.Position);
             _bulletViews.Add(bulletView);
             bulletView.OnTriggerEnterSubject

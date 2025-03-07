@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace PunchShooting.Battle.Data
+namespace PunchShooting.Battle.Data.Player
 {
     //プレイヤ弾ステータス
     public class PlayerBulletStatusDataAccessor
@@ -14,7 +14,7 @@ namespace PunchShooting.Battle.Data
 
         public void RemoveStatus(ObjectStatus status)
         {
-            _statusDictionary.Remove(status.InstanceId);
+            RemoveStatus(status.InstanceId);
         }
 
         public void RemoveStatus(long instanceId)

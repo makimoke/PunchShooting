@@ -1,7 +1,8 @@
 using PunchShooting.Battle.Data;
+using PunchShooting.Battle.Data.Player;
 using VContainer;
 
-namespace PunchShooting.Battle.Logic
+namespace PunchShooting.Battle.Logic.Player
 {
     public class PlayerBulletStatusLogic
     {

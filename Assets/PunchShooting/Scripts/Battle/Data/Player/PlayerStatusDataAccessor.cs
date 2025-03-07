@@ -1,6 +1,6 @@
 using R3;
 
-namespace PunchShooting.Battle.Data
+namespace PunchShooting.Battle.Data.Player
 {
     //プレイヤステータス
     public class PlayerStatusDataAccessor

@@ -2,7 +2,10 @@ using System;
 using Cysharp.Threading.Tasks;
 using IceMilkTea.StateMachine;
 using PunchShooting.Battle.Data;
+using PunchShooting.Battle.Data.Player;
+using PunchShooting.Battle.Definitions.Player;
 using PunchShooting.Battle.Logic;
+using PunchShooting.Battle.Logic.Player;
 using PunchShooting.Battle.Views.Player;
 using R3;
 using UnityEngine;
@@ -20,6 +23,7 @@ namespace PunchShooting.Battle.Scenes
         private PlayerResourceProvider _playerResourceProvider;
         private PlayerShipViewController _playerShipViewController;
         private StageStatusDataAccessor _stageStatusDataAccessor;
+        private PlayerBulletBaseParamDataAccessor _playerBulletBaseParamDataAccessor;
         private ImtStateMachine<BattleScene> _stateMachine;
 
 
@@ -52,11 +56,13 @@ namespace PunchShooting.Battle.Scenes
 
         [Inject]
         public void Construct(StageStatusDataAccessor stageStatusDataAccessor,
+            PlayerBulletBaseParamDataAccessor playerBulletBaseParamDataAccessor,
             PlayerResourceProvider playerResourceProvider,
             PlayerShipViewController playerShipViewController,
             PlayerBulletStatusLogic playerBulletStatusLogic)
         {
             _stageStatusDataAccessor = stageStatusDataAccessor;
+            _playerBulletBaseParamDataAccessor = playerBulletBaseParamDataAccessor;
             _playerResourceProvider = playerResourceProvider;
             _playerShipViewController = playerShipViewController;
             _playerBulletStatusLogic = playerBulletStatusLogic;
@@ -73,6 +79,7 @@ namespace PunchShooting.Battle.Scenes
         private async UniTask WaitLoadResource(Action action)
         {
             await _playerResourceProvider.LoadAsync();
+            await _playerBulletBaseParamDataAccessor.LoadAsync();
             _playerShipViewController.Initialize();
             _playerShipViewController.OnCollidedBulletSubject
                 .Subscribe(collisionResult => { Debug.Log($"SourceId={collisionResult.SourceId} OpponentId={collisionResult.OpponentId}"); })
@@ -89,7 +96,7 @@ namespace PunchShooting.Battle.Scenes
             _bulletCounter -= deltaTime;
             if (_bulletCounter <= 0.0f)
             {
-                ObjectBaseParam baseParam = new();
+                var baseParam = _playerBulletBaseParamDataAccessor.FindBaseParam(PlayerBulletBaseParamDefinition.ParamId.PBul001);
                 var objectStatus = _playerBulletStatusLogic.CreateBullet(baseParam);
 
                 _playerShipViewController.CreateBullet(objectStatus.InstanceId);
