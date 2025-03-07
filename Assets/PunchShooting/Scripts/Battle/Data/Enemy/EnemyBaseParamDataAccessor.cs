@@ -22,7 +22,7 @@ namespace PunchShooting.Battle.Data.Enemy
         public async UniTask LoadAsync()
         {
             _paramDictionary[EnemyBaseParamDefinition.ParamId.Enemy001] =
-                await Addressables.LoadAssetAsync<ObjectBaseParam>("Assets/PunchShooting/SObjects/so_enemy_001.asset").Task;
+                await Addressables.LoadAssetAsync<ObjectBaseParam>("Assets/PunchShooting/SObjects/Battle/Enemy/so_enemy_001.asset").Task;
         }
 
         public ObjectBaseParam FindBaseParam(EnemyBaseParamDefinition.ParamId paramId)

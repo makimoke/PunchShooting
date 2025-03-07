@@ -22,9 +22,9 @@ namespace PunchShooting.Battle.Data.Player
         public async UniTask LoadAsync()
         {
             _paramDictionary[PlayerBulletBaseParamDefinition.ParamId.PBul001] =
-                await Addressables.LoadAssetAsync<ObjectBaseParam>("Assets/PunchShooting/SObjects/so_pbul_001.asset").Task;
+                await Addressables.LoadAssetAsync<ObjectBaseParam>("Assets/PunchShooting/SObjects/Battle/Player/so_pbul_001.asset").Task;
             _paramDictionary[PlayerBulletBaseParamDefinition.ParamId.PBul002] =
-                await Addressables.LoadAssetAsync<ObjectBaseParam>("Assets/PunchShooting/SObjects/so_pbul_002.asset").Task;
+                await Addressables.LoadAssetAsync<ObjectBaseParam>("Assets/PunchShooting/SObjects/Battle/Player/so_pbul_002.asset").Task;
         }
 
         public ObjectBaseParam FindBaseParam(PlayerBulletBaseParamDefinition.ParamId paramId)

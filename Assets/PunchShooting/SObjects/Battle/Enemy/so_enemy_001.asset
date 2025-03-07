@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 876186b7162fee445b3e5328e42eaeb2, type: 3}
   m_Name: so_enemy_001
   m_EditorClassIdentifier: 
-  Name: pbul_001
-  SpriteName: spr_pbul_001
+  Name: enemy_001
+  SpriteName: spr_enemy_001
   Hp: 10
   Str: 10
   Score: 10
