@@ -77,6 +77,9 @@ namespace PunchShooting.Battle.Scenes
             _playerShipViewController.OnCollidedBulletSubject
                 .Subscribe(collisionResult => { Debug.Log($"SourceId={collisionResult.SourceId} OpponentId={collisionResult.OpponentId}"); })
                 .AddTo(ref _disposableBag);
+            _playerShipViewController.OnDestroyedBulletSubject
+                .Subscribe(instanceId => _playerBulletStatusLogic.RemoveBullet(instanceId))
+                .AddTo(ref _disposableBag);
 
             action.Invoke();
         }
