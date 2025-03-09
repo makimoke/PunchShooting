@@ -1,4 +1,5 @@
 using System;
+using PunchShooting.Battle.Definitions.Enemy;
 using UnityEngine;
 
 namespace PunchShooting.Battle.Data.Enemy
@@ -7,7 +8,7 @@ namespace PunchShooting.Battle.Data.Enemy
     [Serializable]
     public class EnemyPlaceParam
     {
-        public string Id;
+        public EnemyBaseParamDefinition.ParamId Id;
         public Vector2 SquarePosition = Vector2.zero; // マス目配置位置
     }
 
