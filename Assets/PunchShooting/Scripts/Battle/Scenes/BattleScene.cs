@@ -2,10 +2,12 @@ using System;
 using Cysharp.Threading.Tasks;
 using IceMilkTea.StateMachine;
 using PunchShooting.Battle.Data;
+using PunchShooting.Battle.Data.Enemy;
 using PunchShooting.Battle.Data.Player;
 using PunchShooting.Battle.Definitions.Player;
-using PunchShooting.Battle.Logic;
+using PunchShooting.Battle.Logic.Enemy;
 using PunchShooting.Battle.Logic.Player;
+using PunchShooting.Battle.Views.Enemy;
 using PunchShooting.Battle.Views.Player;
 using R3;
 using UnityEngine;
@@ -19,11 +21,16 @@ namespace PunchShooting.Battle.Scenes
         private const float ShotTimeInterval = 1.0f; //弾発射間隔
         private float _bulletCounter = ShotTimeInterval;
         private DisposableBag _disposableBag;
+        private EnemyBaseParamDataAccessor _enemyBaseParamDataAccessor;
+        private EnemyResourceProvider _enemyResourceProvider;
+        private EnemyStatusLogic _enemyStatusLogic;
+        private EnemyViewController _enemyViewController;
+        private PlayerBulletBaseParamDataAccessor _playerBulletBaseParamDataAccessor;
         private PlayerBulletStatusLogic _playerBulletStatusLogic;
         private PlayerResourceProvider _playerResourceProvider;
         private PlayerShipViewController _playerShipViewController;
+        private StageEnemyGenerator _stageEnemyGenerator;
         private StageStatusDataAccessor _stageStatusDataAccessor;
-        private PlayerBulletBaseParamDataAccessor _playerBulletBaseParamDataAccessor;
         private ImtStateMachine<BattleScene> _stateMachine;
 
 
@@ -57,15 +64,25 @@ namespace PunchShooting.Battle.Scenes
         [Inject]
         public void Construct(StageStatusDataAccessor stageStatusDataAccessor,
             PlayerBulletBaseParamDataAccessor playerBulletBaseParamDataAccessor,
+            EnemyBaseParamDataAccessor enemyBaseParamDataAccessor,
             PlayerResourceProvider playerResourceProvider,
+            EnemyResourceProvider enemyResourceProvider,
             PlayerShipViewController playerShipViewController,
-            PlayerBulletStatusLogic playerBulletStatusLogic)
+            EnemyViewController enemyViewController,
+            PlayerBulletStatusLogic playerBulletStatusLogic,
+            EnemyStatusLogic enemyStatusLogic,
+            StageEnemyGenerator stageEnemyGenerator)
         {
             _stageStatusDataAccessor = stageStatusDataAccessor;
             _playerBulletBaseParamDataAccessor = playerBulletBaseParamDataAccessor;
+            _enemyBaseParamDataAccessor = enemyBaseParamDataAccessor;
             _playerResourceProvider = playerResourceProvider;
+            _enemyResourceProvider = enemyResourceProvider;
             _playerShipViewController = playerShipViewController;
+            _enemyViewController = enemyViewController;
             _playerBulletStatusLogic = playerBulletStatusLogic;
+            _enemyStatusLogic = enemyStatusLogic;
+            _stageEnemyGenerator = stageEnemyGenerator;
         }
 
         //TODO:Actionを別の方式にする？
@@ -79,19 +96,33 @@ namespace PunchShooting.Battle.Scenes
         private async UniTask WaitLoadResource(Action action)
         {
             await _playerResourceProvider.LoadAsync();
+            await _enemyResourceProvider.LoadAsync();
             await _playerBulletBaseParamDataAccessor.LoadAsync();
+            await _enemyBaseParamDataAccessor.LoadAsync();
+            await _stageEnemyGenerator.LoadAsync();
             _playerShipViewController.Initialize();
+            _enemyViewController.Initialize();
             _playerShipViewController.OnCollidedBulletSubject
                 .Subscribe(collisionResult => { Debug.Log($"SourceId={collisionResult.SourceId} OpponentId={collisionResult.OpponentId}"); })
                 .AddTo(ref _disposableBag);
             _playerShipViewController.OnDestroyedBulletSubject
                 .Subscribe(instanceId => _playerBulletStatusLogic.RemoveBullet(instanceId))
                 .AddTo(ref _disposableBag);
+            _enemyViewController.OnCollidedEnemySubject
+                .Subscribe(collisionResult => { Debug.Log($"SourceId={collisionResult.SourceId} OpponentId={collisionResult.OpponentId}"); })
+                .AddTo(ref _disposableBag);
+            _enemyViewController.OnDestroyedEnemySubject
+                .Subscribe(instanceId => _enemyStatusLogic.RemoveEnemy(instanceId))
+                .AddTo(ref _disposableBag);
+            _stageEnemyGenerator.OnCreateEnemySubject
+                .Subscribe(param => CreateEnemy(param))
+                .AddTo(ref _disposableBag);
 
             action.Invoke();
         }
 
-        private void UpdatePlayerBullet(float deltaTime)
+        //自動で弾を発射する
+        private void FirePlayerBulletAutomatically(float deltaTime)
         {
             _bulletCounter -= deltaTime;
             if (_bulletCounter <= 0.0f)
@@ -105,6 +136,12 @@ namespace PunchShooting.Battle.Scenes
             }
         }
 
+        private void CreateEnemy(StageEnemyCreateParam stageEnemyCreateParam)
+        {
+            var baseParam = _enemyBaseParamDataAccessor.FindBaseParam(stageEnemyCreateParam.Id);
+            var objectStatus = _enemyStatusLogic.CreateEnemy(baseParam);
+            _enemyViewController.CreateEnemy(objectStatus.InstanceId, baseParam.PrefabId, baseParam.SpriteId, stageEnemyCreateParam.Position);
+        }
 
         private enum StateEventId
         {
@@ -157,8 +194,12 @@ namespace PunchShooting.Battle.Scenes
             protected override void Update()
             {
                 Context._playerShipViewController.Update(Time.deltaTime);
+                Context._enemyViewController.Update(Time.deltaTime);
 
-                Context.UpdatePlayerBullet(Time.deltaTime);
+                //時間で弾発射
+                Context.FirePlayerBulletAutomatically(Time.deltaTime);
+
+                Context._stageEnemyGenerator.Update(Time.deltaTime);
 
                 //Context._stageEnemyGenerator.Update(Time.deltaTime);
 
