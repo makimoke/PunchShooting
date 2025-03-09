@@ -17,28 +17,58 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: c738198367f6ce8438aa4df39b57f52f
   m_SerializeEntries:
-  - m_GUID: a5258adb62311e44d905e032e8e03625
-    m_Address: Assets/PunchShooting/Prefabs/PlayerShip.prefab
+  - m_GUID: e5d83341ce4becf479aa3289846aa23b
+    m_Address: Assets/PunchShooting/Prefabs/Battle/Player/PlayerBullet.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e8140196843394b49a1b26dfec2bc7ce
-    m_Address: Assets/PunchShooting/Sprites/spr_pbul_001.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 95bee4f99a3bd4643801eacd414f5c2e
-    m_Address: Assets/PunchShooting/Sprites/spr_pbul_002.png
+    m_Address: Assets/PunchShooting/Sprites/Battle/Player/spr_pbul_001.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b06d95b0f5dd02f49ab36c03c4b24a62
-    m_Address: Assets/PunchShooting/Sprites/spr_player_001.png
+    m_Address: Assets/PunchShooting/Sprites/Battle/Player/spr_player_001.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e5d83341ce4becf479aa3289846aa23b
-    m_Address: Assets/PunchShooting/Prefabs/PlayerBullet.prefab
+  - m_GUID: 95bee4f99a3bd4643801eacd414f5c2e
+    m_Address: Assets/PunchShooting/Sprites/Battle/Player/spr_pbul_002.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a5258adb62311e44d905e032e8e03625
+    m_Address: Assets/PunchShooting/Prefabs/Battle/Player/PlayerShip.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ad97610890a13bb4aaf9399383863fe1
+    m_Address: Assets/PunchShooting/SObjects/Battle/Player/so_pbul_002.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 574d661c3e9186646b4cf90ba70c0a68
+    m_Address: Assets/PunchShooting/SObjects/Battle/Player/so_pbul_001.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 06a0cf051b5437b4aa61198b07db474d
+    m_Address: Assets/PunchShooting/SObjects/Battle/Enemy/so_enemy_001.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d083d5a7773ac1646bc48a6c0299725a
+    m_Address: Assets/PunchShooting/Sprites/Battle/Enemy/spr_enemy_001.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fd6d4edd6023ef14cb4ad7a2945d2028
+    m_Address: Assets/PunchShooting/Prefabs/Battle/Enemy/Enemy001.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b06d304c430c0054ebc141e79533c750
+    m_Address: Assets/PunchShooting/SObjects/Battle/Enemy/so_stage_enemy_place_001.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
