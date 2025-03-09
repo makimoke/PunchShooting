@@ -12,4 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46dd3e0bd29f69749bf6f254ae436a56, type: 3}
   m_Name: so_stage_enemy_place_001
   m_EditorClassIdentifier: 
-  EnemySquadPlaceParams: []
+  EnemySquadPlaceParams:
+  - WaitSeconds: 1
+    SquarePosition: {x: 0, y: 0}
+    EnemyPlaceParams:
+    - Id: 0
+      SquarePosition: {x: 0, y: 0}

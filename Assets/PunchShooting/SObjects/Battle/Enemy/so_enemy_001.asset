@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: so_enemy_001
   m_EditorClassIdentifier: 
   Name: enemy_001
-  SpriteName: spr_enemy_001
+  PrefabId: 100
+  SpriteId: 100
   Hp: 10
   Str: 10
   Score: 10
