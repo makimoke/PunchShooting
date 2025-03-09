@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using PunchShooting.Battle.Definitions.Player;
+using PunchShooting.Battle.Definitions;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using VContainer;
@@ -13,8 +13,8 @@ namespace PunchShooting.Battle.Views.Player
     public class PlayerResourceProvider : IDisposable
     {
         private readonly BattleFieldView _battleFieldView;
-        private readonly Dictionary<PlayerResourceDefinition.PrefabId, GameObject> _prefabDictionary = new();
-        private readonly Dictionary<PlayerResourceDefinition.SpriteId, Sprite> _spriteDictionary = new();
+        private readonly Dictionary<SpriteResourceDefinition.PrefabId, GameObject> _prefabDictionary = new();
+        private readonly Dictionary<SpriteResourceDefinition.SpriteId, Sprite> _spriteDictionary = new();
 
         [Inject]
         public PlayerResourceProvider(BattleFieldView battleFieldView)
@@ -38,17 +38,17 @@ namespace PunchShooting.Battle.Views.Player
         public async UniTask LoadAsync()
         {
             //プレハブ
-            _prefabDictionary[PlayerResourceDefinition.PrefabId.PShip] = await Addressables.LoadAssetAsync<GameObject>("Assets/PunchShooting/Prefabs/Battle/Player/PlayerShip.prefab").Task;
-            _prefabDictionary[PlayerResourceDefinition.PrefabId.PBul] = await Addressables.LoadAssetAsync<GameObject>("Assets/PunchShooting/Prefabs/Battle/Player/PlayerBullet.prefab").Task;
+            _prefabDictionary[SpriteResourceDefinition.PrefabId.PShip] = await Addressables.LoadAssetAsync<GameObject>("Assets/PunchShooting/Prefabs/Battle/Player/PlayerShip.prefab").Task;
+            _prefabDictionary[SpriteResourceDefinition.PrefabId.PBul] = await Addressables.LoadAssetAsync<GameObject>("Assets/PunchShooting/Prefabs/Battle/Player/PlayerBullet.prefab").Task;
 
             //スプライト
-            _spriteDictionary[PlayerResourceDefinition.SpriteId.PBul001] = await Addressables.LoadAssetAsync<Sprite>("Assets/PunchShooting/Sprites/Battle/Player/spr_pbul_001.png").Task;
-            _spriteDictionary[PlayerResourceDefinition.SpriteId.PBul002] = await Addressables.LoadAssetAsync<Sprite>("Assets/PunchShooting/Sprites/Battle/Player/spr_pbul_002.png").Task;
+            _spriteDictionary[SpriteResourceDefinition.SpriteId.PBul001] = await Addressables.LoadAssetAsync<Sprite>("Assets/PunchShooting/Sprites/Battle/Player/spr_pbul_001.png").Task;
+            _spriteDictionary[SpriteResourceDefinition.SpriteId.PBul002] = await Addressables.LoadAssetAsync<Sprite>("Assets/PunchShooting/Sprites/Battle/Player/spr_pbul_002.png").Task;
         }
 
         public PlayerShipView InstantiatePlayerShip()
         {
-            var playerShipObj = Object.Instantiate(_prefabDictionary[PlayerResourceDefinition.PrefabId.PShip], _battleFieldView.Transform);
+            var playerShipObj = Object.Instantiate(_prefabDictionary[SpriteResourceDefinition.PrefabId.PShip], _battleFieldView.Transform);
             return playerShipObj.GetComponent<PlayerShipView>();
         }
 
@@ -57,12 +57,12 @@ namespace PunchShooting.Battle.Views.Player
             Object.Destroy(playerShipView.gameObject);
         }
 
-        public GameObject FindPrefab(PlayerResourceDefinition.PrefabId prefabId)
+        public GameObject FindPrefab(SpriteResourceDefinition.PrefabId prefabId)
         {
             return _prefabDictionary[prefabId];
         }
 
-        public Sprite FindSprite(PlayerResourceDefinition.SpriteId spriteId)
+        public Sprite FindSprite(SpriteResourceDefinition.SpriteId spriteId)
         {
             return _spriteDictionary[spriteId];
         }

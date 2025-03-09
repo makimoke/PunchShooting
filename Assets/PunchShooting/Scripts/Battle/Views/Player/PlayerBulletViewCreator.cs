@@ -1,4 +1,4 @@
-using PunchShooting.Battle.Definitions.Player;
+using PunchShooting.Battle.Definitions;
 using UnityEngine;
 using VContainer;
 using Object = UnityEngine.Object;
@@ -9,7 +9,6 @@ namespace PunchShooting.Battle.Views.Player
     {
         private readonly BattleFieldView _battleFieldView;
         private readonly PlayerResourceProvider _playerResourceProvider;
-        private GameObject _bulletPrefab;
 
         [Inject]
         public PlayerBulletViewCreator(BattleFieldView battleFieldView,
@@ -19,15 +18,10 @@ namespace PunchShooting.Battle.Views.Player
             _playerResourceProvider = playerResourceProvider;
         }
 
-        public PlayerBulletView CreateBullet(long instanceId, PlayerResourceDefinition.PrefabId prefabId, PlayerResourceDefinition.SpriteId spriteId, Vector3 position)
+        public PlayerBulletView CreateBullet(long instanceId, SpriteResourceDefinition.PrefabId prefabId, SpriteResourceDefinition.SpriteId spriteId, Vector3 position)
         {
-            if (!_bulletPrefab)
-            {
-                //１回目は取得する
-                _bulletPrefab = _playerResourceProvider.FindPrefab(prefabId);
-            }
-
-            var bulletObject = Object.Instantiate(_bulletPrefab, _battleFieldView.Transform);
+            var bulletPrefab = _playerResourceProvider.FindPrefab(prefabId);
+            var bulletObject = Object.Instantiate(bulletPrefab, _battleFieldView.Transform);
             bulletObject.transform.localPosition = position;
             var playerBulletView = bulletObject.GetComponent<PlayerBulletView>();
             playerBulletView.SetSprite(_playerResourceProvider.FindSprite(spriteId));

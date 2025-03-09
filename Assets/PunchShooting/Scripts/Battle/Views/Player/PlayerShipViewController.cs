@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using PunchShooting.Battle.Definitions.Player;
+using PunchShooting.Battle.Definitions;
 using R3;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,7 +15,6 @@ namespace PunchShooting.Battle.Views.Player
         //定数
         private const float InputMoveScale = 0.02f;
 
-        //private const float ShotTimeInterval = 1.0f; //弾発射間隔
         private readonly List<PlayerBulletView> _bulletViews = new();
         private readonly PlayerBulletViewCreator _playerBulletViewCreator;
         private readonly PlayerInput _playerInput;
@@ -24,7 +23,6 @@ namespace PunchShooting.Battle.Views.Player
 
         public readonly Subject<long> OnDestroyedBulletSubject = new();
 
-        //private float _bulletCounter = ShotTimeInterval;
         private DisposableBag _disposableBag;
         private PlayerShipView _playerShipView;
 
@@ -59,19 +57,6 @@ namespace PunchShooting.Battle.Views.Player
                 _playerShipView.AddPosition(inputMoveAxis * InputMoveScale);
             }
 
-/*            //時間で弾発射
-            _bulletCounter -= deltaTime;
-            if (_bulletCounter <= 0.0f)
-            {
-                _bulletCounter = ShotTimeInterval;
-                var bulletView = _playerBulletViewCreator.CreateBullet(PlayerResourceDefinition.PrefabId.Bul, PlayerResourceDefinition.SpriteId.Bul001,
-                    new Vector3(-0.6f, 0.38f, 0.0f) + _playerShipView.Position);
-                _bulletViews.Add(bulletView);
-                bulletView.OnTriggerEnterSubject
-                    .Subscribe(collisionResult => { Debug.Log("Enemy On:" + collisionResult.Collider.tag); })
-                    .AddTo(ref _disposableBag);
-            }*/
-
             UpdateBullets(deltaTime);
         }
 
@@ -96,7 +81,7 @@ namespace PunchShooting.Battle.Views.Player
 
         public void CreateBullet(long instanceId)
         {
-            var bulletView = _playerBulletViewCreator.CreateBullet(instanceId, PlayerResourceDefinition.PrefabId.PBul, PlayerResourceDefinition.SpriteId.PBul001,
+            var bulletView = _playerBulletViewCreator.CreateBullet(instanceId, SpriteResourceDefinition.PrefabId.PBul, SpriteResourceDefinition.SpriteId.PBul001,
                 new Vector3(-0.6f, 0.38f, 0.0f) + _playerShipView.Position);
             _bulletViews.Add(bulletView);
             bulletView.OnTriggerEnterSubject
