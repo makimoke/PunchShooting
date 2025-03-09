@@ -1,3 +1,4 @@
+using PunchShooting.Battle.Definitions;
 using UnityEngine;
 
 namespace PunchShooting.Battle.Data
@@ -7,7 +8,8 @@ namespace PunchShooting.Battle.Data
     {
         public string Name; // 名前
 
-        [Header("Resources Properties")] public string SpriteName = "";
+        [Header("Resources Properties")] public SpriteResourceDefinition.PrefabId PrefabId;
+        public SpriteResourceDefinition.SpriteId SpriteId;
 
         [Header("Battle Properties")] public int Hp = 10; // 体力
 
