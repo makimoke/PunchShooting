@@ -44,7 +44,7 @@ namespace PunchShooting.Battle.Views.Player
 
         public void Initialize()
         {
-            _playerShipView = _playerResourceProvider.InstantiatePlayerShip();
+            _playerShipView = _playerResourceProvider.InstantiatePlayerShip(SpriteResourceDefinition.PrefabId.PShip);
         }
 
         //毎フレーム呼ばれる

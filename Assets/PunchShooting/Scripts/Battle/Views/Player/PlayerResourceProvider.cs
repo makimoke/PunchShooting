@@ -46,10 +46,12 @@ namespace PunchShooting.Battle.Views.Player
             _spriteDictionary[SpriteResourceDefinition.SpriteId.PBul002] = await Addressables.LoadAssetAsync<Sprite>("Assets/PunchShooting/Sprites/Battle/Player/spr_pbul_002.png").Task;
         }
 
-        public PlayerShipView InstantiatePlayerShip()
+        public PlayerShipView InstantiatePlayerShip(SpriteResourceDefinition.PrefabId prefabId)
         {
-            var playerShipObj = Object.Instantiate(_prefabDictionary[SpriteResourceDefinition.PrefabId.PShip], _battleFieldView.Transform);
-            return playerShipObj.GetComponent<PlayerShipView>();
+            var playerShipObj = Object.Instantiate(_prefabDictionary[prefabId], _battleFieldView.Transform);
+            var playerShipView = playerShipObj.GetComponent<PlayerShipView>();
+            playerShipView.AdjustColliderSize();
+            return playerShipView;
         }
 
         public void DestroyPlayerShip(PlayerShipView playerShipView)

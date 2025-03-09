@@ -7,6 +7,7 @@ namespace PunchShooting.Battle.Views
     public abstract class BaseSpriteView : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
+        [SerializeField] private BoxCollider2D boxCollider2D;
         public readonly Subject<Collider2D> OnTriggerEnterSubject = new();
 
         public long InstanceId { get; set; }
@@ -26,6 +27,11 @@ namespace PunchShooting.Battle.Views
         public void SetSprite(Sprite sprite)
         {
             spriteRenderer.sprite = sprite;
+        }
+
+        public void AdjustColliderSize()
+        {
+            boxCollider2D.size = spriteRenderer.bounds.size*0.8f; //暫定対応
         }
     }
 }

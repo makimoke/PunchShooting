@@ -25,6 +25,7 @@ namespace PunchShooting.Battle.Views.Enemy
             bulletObject.transform.localPosition = position;
             var enemyView = bulletObject.GetComponent<EnemyView>();
             enemyView.SetSprite(_enemyResourceProvider.FindSprite(spriteId));
+            enemyView.AdjustColliderSize();
             enemyView.InstanceId = instanceId;
             return enemyView;
         }

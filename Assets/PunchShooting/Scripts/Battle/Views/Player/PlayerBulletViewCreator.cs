@@ -25,6 +25,7 @@ namespace PunchShooting.Battle.Views.Player
             bulletObject.transform.localPosition = position;
             var playerBulletView = bulletObject.GetComponent<PlayerBulletView>();
             playerBulletView.SetSprite(_playerResourceProvider.FindSprite(spriteId));
+            playerBulletView.AdjustColliderSize();
             playerBulletView.InstanceId = instanceId;
 
             return playerBulletView;
