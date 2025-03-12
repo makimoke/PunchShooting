@@ -13,6 +13,7 @@ namespace PunchShooting.Battle.Views
         public long InstanceId { get; set; }
 
         public Vector3 Position => transform.localPosition;
+        public SpriteRenderer SpriteRenderer => spriteRenderer;
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
@@ -31,7 +32,7 @@ namespace PunchShooting.Battle.Views
 
         public void AdjustColliderSize()
         {
-            boxCollider2D.size = spriteRenderer.bounds.size*0.8f; //暫定対応
+            boxCollider2D.size = spriteRenderer.bounds.size * 0.8f; //暫定対応
         }
     }
 }
