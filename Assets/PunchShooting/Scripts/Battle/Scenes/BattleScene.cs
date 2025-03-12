@@ -186,6 +186,7 @@ namespace PunchShooting.Battle.Scenes
         {
             protected override void Enter()
             {
+                Context._playerStatusDataAccessor.Reset();
                 StateMachine.SendEvent((int)StateEventId.Finish);
             }
         }
