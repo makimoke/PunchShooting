@@ -8,8 +8,8 @@ using Object = UnityEngine.Object;
 
 namespace PunchShooting.Battle.Views.Enemy
 {
-    //自機
-    public class EnemyViewController : IDisposable
+    //敵全体管理
+    public class EnemiesViewController : IDisposable
     {
         private readonly EnemyResourceProvider _enemyResourceProvider;
 
@@ -25,7 +25,7 @@ namespace PunchShooting.Battle.Views.Enemy
 
 
         [Inject]
-        public EnemyViewController(EnemyResourceProvider enemyResourceProvider,
+        public EnemiesViewController(EnemyResourceProvider enemyResourceProvider,
             EnemyViewCreator enemyViewCreator)
         {
             _enemyResourceProvider = enemyResourceProvider;
