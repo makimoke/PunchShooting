@@ -8,8 +8,8 @@ namespace PunchShooting.Battle.Data
     {
         public string Name; // 名前
 
-        [Header("Resources Properties")] public SpriteResourceDefinition.PrefabId PrefabId;
-        public SpriteResourceDefinition.SpriteId SpriteId;
+        [Header("Resources Properties")] public SpriteResourceDefinition.PrefabId PrefabId = SpriteResourceDefinition.PrefabId.Enemy001;
+        public SpriteResourceDefinition.SpriteId SpriteId = SpriteResourceDefinition.SpriteId.Enemy001;
 
         [Header("Battle Properties")] public int Hp = 10; // 体力
 
