@@ -8,6 +8,7 @@ using PunchShooting.Battle.Data.Player;
 using PunchShooting.Battle.Definitions.Player;
 using PunchShooting.Battle.Logic.Enemy;
 using PunchShooting.Battle.Logic.Player;
+using PunchShooting.Battle.Views;
 using PunchShooting.Battle.Views.Enemy;
 using PunchShooting.Battle.Views.Player;
 using R3;
@@ -37,6 +38,7 @@ namespace PunchShooting.Battle.Scenes
         private PlayerStatusLogic _playerStatusLogic;
         private StageEnemyGenerator _stageEnemyGenerator;
         private StageStatusDataAccessor _stageStatusDataAccessor;
+        private StageStatusViewController _stageStatusViewController;
         private ImtStateMachine<BattleScene> _stateMachine;
 
 
@@ -79,6 +81,7 @@ namespace PunchShooting.Battle.Scenes
             PlayerShipViewController playerShipViewController,
             PlayerBulletsViewController playerBulletsViewController,
             EnemiesViewController enemiesViewController,
+            StageStatusViewController stageStatusViewController,
             PlayerStatusLogic playerStatusLogic,
             PlayerBulletStatusLogic playerBulletStatusLogic,
             EnemyStatusLogic enemyStatusLogic,
@@ -95,6 +98,7 @@ namespace PunchShooting.Battle.Scenes
             _playerShipViewController = playerShipViewController;
             _playerBulletsViewController = playerBulletsViewController;
             _enemiesViewController = enemiesViewController;
+            _stageStatusViewController = stageStatusViewController;
             _playerStatusLogic = playerStatusLogic;
             _playerBulletStatusLogic = playerBulletStatusLogic;
             _enemyStatusLogic = enemyStatusLogic;
@@ -119,6 +123,7 @@ namespace PunchShooting.Battle.Scenes
             _playerShipViewController.Initialize();
             _playerBulletsViewController.Initialize();
             _enemiesViewController.Initialize();
+            _stageStatusViewController.Initialize();
             _playerBulletsViewController.OnCollidedBulletSubject
                 .Subscribe(collisionResult =>
                 {

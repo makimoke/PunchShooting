@@ -10,6 +10,7 @@ using PunchShooting.Battle.Views.Enemy;
 using PunchShooting.Battle.Views.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using VContainer;
 using VContainer.Unity;
 
@@ -20,12 +21,14 @@ namespace PunchShooting.Battle.Systems
         [SerializeField] private BattleScene battleScene;
         [SerializeField] private PlayerInput playerInput;
         [SerializeField] private BattleFieldView battleFieldView;
+        [FormerlySerializedAs("stageStatusView")] [SerializeField] private StatusBarView statusBarView;
 
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterComponent(battleScene);
             builder.RegisterComponent(playerInput);
             builder.RegisterComponent(battleFieldView);
+            builder.RegisterComponent(statusBarView);
             //View
             builder.Register<PlayerResourceProvider>(Lifetime.Singleton);
             builder.Register<PlayerShipViewController>(Lifetime.Singleton);
@@ -34,6 +37,7 @@ namespace PunchShooting.Battle.Systems
             builder.Register<EnemyResourceProvider>(Lifetime.Singleton);
             builder.Register<EnemiesViewController>(Lifetime.Singleton);
             builder.Register<EnemyViewCreator>(Lifetime.Singleton);
+            builder.Register<StageStatusViewController>(Lifetime.Singleton);
             //Data
             builder.Register<PlayerScoreDataAccessor>(Lifetime.Singleton);
             builder.Register<PlayerStatusDataAccessor>(Lifetime.Singleton);

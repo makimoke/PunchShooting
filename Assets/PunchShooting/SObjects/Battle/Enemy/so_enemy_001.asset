@@ -15,7 +15,7 @@ MonoBehaviour:
   Name: enemy_001
   PrefabId: 100
   SpriteId: 100
-  Hp: 10
+  Hp: 30
   Str: 10
   Score: 10
   MoveSpeed: 10
