@@ -23,7 +23,6 @@ namespace PunchShooting.Battle.Views.Enemy
         }
 
         public bool IsOffScreen { set; get; } //画面外か？
-        public bool IsDead { set; get; } //死亡したか？
         public long InstanceId => _enemyView.InstanceId;
 
         public void Dispose()
