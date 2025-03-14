@@ -6,6 +6,8 @@ namespace PunchShooting.Battle.Data.Enemy
     public class EnemyStatusDataAccessor
     {
         private readonly Dictionary<long, ObjectStatus> _statusDictionary = new();
+        public IEnumerable<ObjectStatus> StatusEnumerable => _statusDictionary.Values;
+        public int StatusCount => _statusDictionary.Count;
 
         public void AddStatus(ObjectStatus status)
         {

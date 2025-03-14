@@ -139,6 +139,12 @@ namespace PunchShooting.Battle.Scenes
             _stageEnemyGenerator.OnCreateEnemySubject
                 .Subscribe(param => CreateEnemy(param))
                 .AddTo(ref _disposableBag);
+            _enemyStatusLogic.OnDamageSubject
+                .Subscribe(objectStatus => _enemiesViewController.ReceivedDamage(objectStatus.InstanceId, objectStatus.Damage))
+                .AddTo(ref _disposableBag);
+            _enemyStatusLogic.OnDeadSubject
+                .Subscribe(instanceId => _enemiesViewController.DestroyEnemy(instanceId))
+                .AddTo(ref _disposableBag);
 
             action.Invoke();
         }
@@ -216,6 +222,8 @@ namespace PunchShooting.Battle.Scenes
 
             protected override void Update()
             {
+                Context._enemyStatusLogic.ProcessDamage();
+                
                 Context._playerShipViewController.Update(Time.deltaTime);
                 Context._enemiesViewController.Update(Time.deltaTime);
 

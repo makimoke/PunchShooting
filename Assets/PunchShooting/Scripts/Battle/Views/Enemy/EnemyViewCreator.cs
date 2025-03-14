@@ -18,7 +18,7 @@ namespace PunchShooting.Battle.Views.Enemy
             _enemyResourceProvider = enemyResourceProvider;
         }
 
-        public EnemyView CreateEnemy(long instanceId, SpriteResourceDefinition.PrefabId prefabId, SpriteResourceDefinition.SpriteId spriteId, Vector3 position)
+        public EnemyViewController CreateEnemy(long instanceId, SpriteResourceDefinition.PrefabId prefabId, SpriteResourceDefinition.SpriteId spriteId, Vector3 position)
         {
             var bulletPrefab = _enemyResourceProvider.FindPrefab(prefabId);
             var bulletObject = Object.Instantiate(bulletPrefab, _battleFieldView.Transform);
@@ -27,7 +27,11 @@ namespace PunchShooting.Battle.Views.Enemy
             enemyView.SetSprite(_enemyResourceProvider.FindSprite(spriteId));
             enemyView.AdjustColliderSize();
             enemyView.InstanceId = instanceId;
-            return enemyView;
+
+            var enemyViewController = new EnemyViewController(enemyView);
+            enemyViewController.Initialize();
+
+            return enemyViewController;
         }
     }
 }

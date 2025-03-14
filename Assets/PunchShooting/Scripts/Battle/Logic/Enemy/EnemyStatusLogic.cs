@@ -1,13 +1,17 @@
+using System.Linq;
 using PunchShooting.Battle.Data;
 using PunchShooting.Battle.Data.Enemy;
+using R3;
 using VContainer;
 
 namespace PunchShooting.Battle.Logic.Enemy
 {
     public class EnemyStatusLogic
     {
-        private readonly InstanceIdGenerator _instanceIdGenerator;
         private readonly EnemyStatusDataAccessor _enemyStatusDataAccessor;
+        private readonly InstanceIdGenerator _instanceIdGenerator;
+        public readonly Subject<ObjectStatus> OnDamageSubject = new(); //ダメージを受けた
+        public readonly Subject<long> OnDeadSubject = new(); //死亡した
 
         [Inject]
         public EnemyStatusLogic(EnemyStatusDataAccessor enemyStatusDataAccessor,
@@ -35,6 +39,29 @@ namespace PunchShooting.Battle.Logic.Enemy
         public void RemoveAllEnemis()
         {
             _enemyStatusDataAccessor.RemoveAllStatuses();
+        }
+
+        public void ProcessDamage()
+        {
+            //ダメージ処理
+            foreach (var enemyStatus in _enemyStatusDataAccessor.StatusEnumerable)
+            {
+                if (enemyStatus.Damage > 0)
+                {
+                    OnDamageSubject.OnNext(enemyStatus);
+                    enemyStatus.ReflectDamage();
+                }
+            }
+
+            //死亡処理
+            foreach (var enemyStatus in _enemyStatusDataAccessor.StatusEnumerable.Reverse())
+            {
+                if (enemyStatus.isDead)
+                {
+                    OnDeadSubject.OnNext(enemyStatus.InstanceId);
+                    RemoveEnemy(enemyStatus.InstanceId);
+                }
+            }
         }
     }
 }
