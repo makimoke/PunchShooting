@@ -70,7 +70,7 @@ namespace PunchShooting.Battle.Views.Enemy
             var enemyViewController = _enemyViewControllers.Find(enemy => enemy.InstanceId == instanceId);
             if (enemyViewController != null)
             {
-                enemyViewController.Blink(Color.red, 1.0f);
+                enemyViewController.Blink(Color.red, 0.1f);
             }
         }
 
