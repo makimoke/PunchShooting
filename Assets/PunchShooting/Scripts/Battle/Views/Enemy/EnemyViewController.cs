@@ -49,6 +49,12 @@ namespace PunchShooting.Battle.Views.Enemy
             _spriteBlinkViewController = new SpriteBlinkViewController(_enemyView.SpriteRenderer);
         }
 
+        //敵を破棄
+        public void Destroy()
+        {
+            Object.Destroy(_enemyView.gameObject);
+        }
+        
         //毎フレーム呼ばれる
         public void Update(float deltaTime)
         {
@@ -60,12 +66,6 @@ namespace PunchShooting.Battle.Views.Enemy
             {
                 IsOffScreen = true;
             }
-        }
-
-        //敵を破棄
-        public void DestroyEnemy()
-        {
-            Object.Destroy(_enemyView.gameObject);
         }
 
         public void Blink(Color blinkColor, float blinkSecond)

@@ -58,7 +58,7 @@ namespace PunchShooting.Battle.Views.Enemy
                 if (enemyViewController.IsOffScreen)
                 {
                     OnDestroyedEnemySubject.OnNext(enemyViewController.InstanceId);
-                    enemyViewController.DestroyEnemy();
+                    enemyViewController.Destroy();
                     _enemyViewControllers.Remove(enemyViewController);
                 }
             }
@@ -90,7 +90,7 @@ namespace PunchShooting.Battle.Views.Enemy
             var enemyViewController = _enemyViewControllers.Find(item => item.InstanceId == instanceId);
             if (enemyViewController != null)
             {
-                enemyViewController.DestroyEnemy();
+                enemyViewController.Destroy();
                 _enemyViewControllers.Remove(enemyViewController);
             }
         }
@@ -99,7 +99,7 @@ namespace PunchShooting.Battle.Views.Enemy
         {
             foreach (var enemyViewController in _enemyViewControllers)
             {
-                enemyViewController.DestroyEnemy();
+                enemyViewController.Destroy();
             }
 
             _enemyViewControllers.Clear();
