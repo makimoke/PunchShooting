@@ -15,7 +15,7 @@ namespace PunchShooting.Battle.Views.Enemy
         private readonly List<EnemyViewController> _enemyViewControllers = new();
 
         private readonly EnemyViewCreator _enemyViewCreator;
-        public readonly Subject<SpriteCollisionResult> OnCollidedEnemySubject = new(); //弾と敵が衝突した
+        public readonly Subject<SpriteCollisionResult> OnCollidedSubject = new(); //敵とプレイヤの衝突時
 
         public readonly Subject<long> OnDestroyedEnemySubject = new();
 
@@ -77,11 +77,10 @@ namespace PunchShooting.Battle.Views.Enemy
         public void CreateEnemy(long instanceId, SpriteResourceDefinition.PrefabId prefabId, SpriteResourceDefinition.SpriteId spriteId, Vector3 position)
         {
             var enemyViewController = _enemyViewCreator.CreateEnemy(instanceId, prefabId, spriteId, position);
-
             _enemyViewControllers.Add(enemyViewController);
             //プレイヤとの衝突
-            enemyViewController.OnCollidedEnemySubject
-                .Subscribe(collisionResult => OnCollidedEnemySubject.OnNext(collisionResult))
+            enemyViewController.OnCollidedSubject
+                .Subscribe(collisionResult => OnCollidedSubject.OnNext(collisionResult))
                 .AddTo(ref _disposableBag);
         }
 

@@ -10,7 +10,7 @@ namespace PunchShooting.Battle.Views.Enemy
     public class EnemyViewController : IDisposable
     {
         private readonly EnemyView _enemyView;
-        public readonly Subject<SpriteCollisionResult> OnCollidedEnemySubject = new(); //弾と敵が衝突した
+        public readonly Subject<SpriteCollisionResult> OnCollidedSubject = new(); //プレイヤと衝突
 
         private DisposableBag _disposableBag;
         private SpriteBlinkViewController _spriteBlinkViewController;
@@ -40,7 +40,7 @@ namespace PunchShooting.Battle.Views.Enemy
                     {
                         var spriteView = collider.gameObject.GetComponent<BaseSpriteView>();
                         //Debug.Log($"CreateEnemy:{instanceId} {collisionResult.InstanceId} {spriteView.InstanceId}");
-                        OnCollidedEnemySubject.OnNext(new SpriteCollisionResult(_enemyView.InstanceId, spriteView.InstanceId));
+                        OnCollidedSubject.OnNext(new SpriteCollisionResult(_enemyView.InstanceId, spriteView.InstanceId));
                     }
                 })
                 .AddTo(ref _disposableBag);
@@ -53,7 +53,7 @@ namespace PunchShooting.Battle.Views.Enemy
         {
             Object.Destroy(_enemyView.gameObject);
         }
-        
+
         //毎フレーム呼ばれる
         public void Update(float deltaTime)
         {
