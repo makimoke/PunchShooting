@@ -22,7 +22,7 @@ namespace PunchShooting.Battle.Views.Enemy
             _enemyView = enemyView;
         }
 
-        public bool IsOffScreen { set; get; } //画面外か？
+        public bool IsOffScreen { private set; get; } //画面外か？
         public long InstanceId => _enemyView.InstanceId;
 
         public void Dispose()
