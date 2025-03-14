@@ -6,6 +6,7 @@ namespace PunchShooting.Battle.Data.Player
     public class PlayerBulletStatusDataAccessor
     {
         private readonly Dictionary<long, ObjectStatus> _statusDictionary = new();
+        public IEnumerable<ObjectStatus> StatusEnumerable => _statusDictionary.Values;
 
         public void AddStatus(ObjectStatus status)
         {

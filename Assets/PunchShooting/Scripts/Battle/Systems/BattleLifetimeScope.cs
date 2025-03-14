@@ -29,6 +29,7 @@ namespace PunchShooting.Battle.Systems
             //View
             builder.Register<PlayerResourceProvider>(Lifetime.Singleton);
             builder.Register<PlayerShipViewController>(Lifetime.Singleton);
+            builder.Register<PlayerBulletsViewController>(Lifetime.Singleton);
             builder.Register<PlayerBulletViewCreator>(Lifetime.Singleton);
             builder.Register<EnemyResourceProvider>(Lifetime.Singleton);
             builder.Register<EnemiesViewController>(Lifetime.Singleton);

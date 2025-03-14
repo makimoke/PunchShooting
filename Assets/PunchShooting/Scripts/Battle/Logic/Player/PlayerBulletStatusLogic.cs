@@ -1,5 +1,7 @@
+using System.Linq;
 using PunchShooting.Battle.Data;
 using PunchShooting.Battle.Data.Player;
+using R3;
 using VContainer;
 
 namespace PunchShooting.Battle.Logic.Player
@@ -8,6 +10,9 @@ namespace PunchShooting.Battle.Logic.Player
     {
         private readonly InstanceIdGenerator _instanceIdGenerator;
         private readonly PlayerBulletStatusDataAccessor _playerBulletStatusDataAccessor;
+        public readonly Subject<ObjectStatus> OnDamageSubject = new(); //ダメージを受けた
+        public readonly Subject<long> OnDeadSubject = new(); //死亡した
+
 
         [Inject]
         public PlayerBulletStatusLogic(PlayerBulletStatusDataAccessor playerBulletStatusDataAccessor,
@@ -35,6 +40,29 @@ namespace PunchShooting.Battle.Logic.Player
         public void RemoveAllBullets()
         {
             _playerBulletStatusDataAccessor.RemoveAllStatuses();
+        }
+
+        public void ProcessDamage()
+        {
+            //ダメージ処理
+            foreach (var bulletStatus in _playerBulletStatusDataAccessor.StatusEnumerable)
+            {
+                if (bulletStatus.Damage > 0)
+                {
+                    OnDamageSubject.OnNext(bulletStatus);
+                    bulletStatus.ReflectDamage();
+                }
+            }
+
+            //死亡処理
+            foreach (var bulletStatus in _playerBulletStatusDataAccessor.StatusEnumerable.Reverse())
+            {
+                if (bulletStatus.isDead)
+                {
+                    OnDeadSubject.OnNext(bulletStatus.InstanceId);
+                    RemoveBullet(bulletStatus.InstanceId);
+                }
+            }
         }
     }
 }

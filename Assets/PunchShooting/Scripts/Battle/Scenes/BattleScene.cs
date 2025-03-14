@@ -30,6 +30,7 @@ namespace PunchShooting.Battle.Scenes
         private PlayerBulletBaseParamDataAccessor _playerBulletBaseParamDataAccessor;
         private PlayerBulletStatusDataAccessor _playerBulletStatusDataAccessor;
         private PlayerBulletStatusLogic _playerBulletStatusLogic;
+        private PlayerBulletsViewController _playerBulletsViewController;
         private PlayerResourceProvider _playerResourceProvider;
         private PlayerShipViewController _playerShipViewController;
         private PlayerStatusDataAccessor _playerStatusDataAccessor;
@@ -75,6 +76,7 @@ namespace PunchShooting.Battle.Scenes
             PlayerResourceProvider playerResourceProvider,
             EnemyResourceProvider enemyResourceProvider,
             PlayerShipViewController playerShipViewController,
+            PlayerBulletsViewController playerBulletsViewController,
             EnemiesViewController enemiesViewController,
             PlayerBulletStatusLogic playerBulletStatusLogic,
             EnemyStatusLogic enemyStatusLogic,
@@ -89,6 +91,7 @@ namespace PunchShooting.Battle.Scenes
             _playerResourceProvider = playerResourceProvider;
             _enemyResourceProvider = enemyResourceProvider;
             _playerShipViewController = playerShipViewController;
+            _playerBulletsViewController = playerBulletsViewController;
             _enemiesViewController = enemiesViewController;
             _playerBulletStatusLogic = playerBulletStatusLogic;
             _enemyStatusLogic = enemyStatusLogic;
@@ -111,8 +114,9 @@ namespace PunchShooting.Battle.Scenes
             await _enemyBaseParamDataAccessor.LoadAsync();
             await _stageEnemyGenerator.LoadAsync();
             _playerShipViewController.Initialize();
+            _playerBulletsViewController.Initialize();
             _enemiesViewController.Initialize();
-            _playerShipViewController.OnCollidedBulletSubject
+            _playerBulletsViewController.OnCollidedBulletSubject
                 .Subscribe(collisionResult =>
                 {
                     Debug.Log($"OnCollidedBulletSubject: SourceId={collisionResult.SourceId} OpponentId={collisionResult.OpponentId}");
@@ -121,10 +125,10 @@ namespace PunchShooting.Battle.Scenes
                     DamageCalculator.AddDamage(playerBulletStatus, enemyStatus);
                 })
                 .AddTo(ref _disposableBag);
-            _playerShipViewController.OnDestroyedBulletSubject
+            _playerBulletsViewController.OnDestroyedBulletSubject
                 .Subscribe(instanceId => _playerBulletStatusLogic.RemoveBullet(instanceId))
                 .AddTo(ref _disposableBag);
-            _enemiesViewController.OnCollidedEnemySubject
+            _enemiesViewController.OnCollidedSubject
                 .Subscribe(collisionResult =>
                 {
                     Debug.Log($"OnCollidedEnemySubject: SourceId={collisionResult.SourceId} OpponentId={collisionResult.OpponentId}");
@@ -145,6 +149,13 @@ namespace PunchShooting.Battle.Scenes
             _enemyStatusLogic.OnDeadSubject
                 .Subscribe(instanceId => _enemiesViewController.DestroyEnemy(instanceId))
                 .AddTo(ref _disposableBag);
+            _playerBulletStatusLogic.OnDamageSubject
+                .Subscribe(objectStatus => _playerBulletsViewController.ReceivedDamage(objectStatus.InstanceId, objectStatus.Damage))
+                .AddTo(ref _disposableBag);
+            _playerBulletStatusLogic.OnDeadSubject
+                .Subscribe(instanceId => _playerBulletsViewController.DestroyBullet(instanceId))
+                .AddTo(ref _disposableBag);
+
 
             action.Invoke();
         }
@@ -158,7 +169,7 @@ namespace PunchShooting.Battle.Scenes
                 var baseParam = _playerBulletBaseParamDataAccessor.FindBaseParam(PlayerBulletBaseParamDefinition.ParamId.PBul001);
                 var objectStatus = _playerBulletStatusLogic.CreateBullet(baseParam);
 
-                _playerShipViewController.CreateBullet(objectStatus.InstanceId);
+                _playerBulletsViewController.CreateBullet(objectStatus.InstanceId, _playerShipViewController.Position);
 
                 _bulletCounter = ShotTimeInterval;
             }
@@ -223,18 +234,17 @@ namespace PunchShooting.Battle.Scenes
             protected override void Update()
             {
                 Context._enemyStatusLogic.ProcessDamage();
-                
-                Context._playerShipViewController.Update(Time.deltaTime);
-                Context._enemiesViewController.Update(Time.deltaTime);
+                Context._playerBulletStatusLogic.ProcessDamage();
+
+                var deltaTime = Time.deltaTime;
+                Context._playerShipViewController.Update(deltaTime);
+                Context._playerBulletsViewController.Update(deltaTime);
+                Context._enemiesViewController.Update(deltaTime);
 
                 //時間で弾発射
-                Context.FirePlayerBulletAutomatically(Time.deltaTime);
+                Context.FirePlayerBulletAutomatically(deltaTime);
 
-                Context._stageEnemyGenerator.Update(Time.deltaTime);
-
-                //Context._stageEnemyGenerator.Update(Time.deltaTime);
-
-                //Context._playerStatusDataHolder.ReflectDamage();
+                Context._stageEnemyGenerator.Update(deltaTime);
 
                 /*if (Context._stageStatusDataHolder.LivingEnemyCount == 0 && Context._stageEnemyGenerator.IsCompleted)
                 {
