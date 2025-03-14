@@ -19,7 +19,7 @@ namespace PunchShooting.Battle.Views.Player
         //public readonly Subject<SpriteCollisionResult> OnCollidedBulletSubject = new(); //弾と敵が衝突した
 
         //public readonly Subject<long> OnDestroyedBulletSubject = new();
-
+        private SpriteBlinkViewController _spriteBlinkViewController;
         private DisposableBag _disposableBag;
         private PlayerShipView _playerShipView;
 
@@ -42,6 +42,7 @@ namespace PunchShooting.Battle.Views.Player
         public void Initialize()
         {
             _playerShipView = _playerResourceProvider.InstantiatePlayerShip(SpriteResourceDefinition.PrefabId.PShip);
+            _spriteBlinkViewController = new SpriteBlinkViewController(_playerShipView.SpriteRenderer);
         }
 
         //毎フレーム呼ばれる
@@ -54,5 +55,17 @@ namespace PunchShooting.Battle.Views.Player
                 _playerShipView.AddPosition(inputMoveAxis * InputMoveScale);
             }
         }
+        
+        //ダメージを受けた
+        public void ReceivedDamage(int value)
+        {
+            Blink(Color.red, 0.1f);
+        }
+        
+        public void Blink(Color blinkColor, float blinkSecond)
+        {
+            _spriteBlinkViewController.Blink(blinkColor, blinkSecond);
+        }
+        
     }
 }

@@ -26,7 +26,7 @@ namespace PunchShooting.Battle.Data.Player
 
         public void Reset()
         {
-            HpMax = 50;
+            HpMax = 10;
             Hp = HpMax;
             Status = new ObjectStatus(Hp, 10000);
         }

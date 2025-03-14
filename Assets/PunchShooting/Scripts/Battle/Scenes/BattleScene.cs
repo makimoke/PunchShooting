@@ -34,6 +34,7 @@ namespace PunchShooting.Battle.Scenes
         private PlayerResourceProvider _playerResourceProvider;
         private PlayerShipViewController _playerShipViewController;
         private PlayerStatusDataAccessor _playerStatusDataAccessor;
+        private PlayerStatusLogic _playerStatusLogic;
         private StageEnemyGenerator _stageEnemyGenerator;
         private StageStatusDataAccessor _stageStatusDataAccessor;
         private ImtStateMachine<BattleScene> _stateMachine;
@@ -78,6 +79,7 @@ namespace PunchShooting.Battle.Scenes
             PlayerShipViewController playerShipViewController,
             PlayerBulletsViewController playerBulletsViewController,
             EnemiesViewController enemiesViewController,
+            PlayerStatusLogic playerStatusLogic,
             PlayerBulletStatusLogic playerBulletStatusLogic,
             EnemyStatusLogic enemyStatusLogic,
             StageEnemyGenerator stageEnemyGenerator)
@@ -93,6 +95,7 @@ namespace PunchShooting.Battle.Scenes
             _playerShipViewController = playerShipViewController;
             _playerBulletsViewController = playerBulletsViewController;
             _enemiesViewController = enemiesViewController;
+            _playerStatusLogic = playerStatusLogic;
             _playerBulletStatusLogic = playerBulletStatusLogic;
             _enemyStatusLogic = enemyStatusLogic;
             _stageEnemyGenerator = stageEnemyGenerator;
@@ -155,7 +158,12 @@ namespace PunchShooting.Battle.Scenes
             _playerBulletStatusLogic.OnDeadSubject
                 .Subscribe(instanceId => _playerBulletsViewController.DestroyBullet(instanceId))
                 .AddTo(ref _disposableBag);
-
+            _playerStatusLogic.OnDamageSubject
+                .Subscribe(objectStatus => _playerShipViewController.ReceivedDamage(objectStatus.Damage))
+                .AddTo(ref _disposableBag);
+            _playerStatusLogic.OnDeadSubject
+                .Subscribe(_ => _stateMachine.SendEvent((int)StateEventId.Miss))
+                .AddTo(ref _disposableBag);
 
             action.Invoke();
         }
@@ -234,6 +242,7 @@ namespace PunchShooting.Battle.Scenes
             protected override void Update()
             {
                 Context._enemyStatusLogic.ProcessDamage();
+                Context._playerStatusLogic.ProcessDamage();
                 Context._playerBulletStatusLogic.ProcessDamage();
 
                 var deltaTime = Time.deltaTime;
