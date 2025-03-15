@@ -35,6 +35,7 @@ namespace PunchShooting.Battle.Scenes
         private PlayerResourceProvider _playerResourceProvider;
         private PlayerShipViewController _playerShipViewController;
         private PlayerStatusDataAccessor _playerStatusDataAccessor;
+        private PlayerScoreLogic _playerScoreLogic;
         private PlayerStatusLogic _playerStatusLogic;
         private StageEnemyGenerator _stageEnemyGenerator;
         private StageStatusDataAccessor _stageStatusDataAccessor;
@@ -83,6 +84,7 @@ namespace PunchShooting.Battle.Scenes
             EnemiesViewController enemiesViewController,
             StageStatusViewController stageStatusViewController,
             PlayerStatusLogic playerStatusLogic,
+            PlayerScoreLogic playerScoreLogic,
             PlayerBulletStatusLogic playerBulletStatusLogic,
             EnemyStatusLogic enemyStatusLogic,
             StageEnemyGenerator stageEnemyGenerator)
@@ -100,6 +102,7 @@ namespace PunchShooting.Battle.Scenes
             _enemiesViewController = enemiesViewController;
             _stageStatusViewController = stageStatusViewController;
             _playerStatusLogic = playerStatusLogic;
+            _playerScoreLogic = playerScoreLogic;
             _playerBulletStatusLogic = playerBulletStatusLogic;
             _enemyStatusLogic = enemyStatusLogic;
             _stageEnemyGenerator = stageEnemyGenerator;
@@ -152,7 +155,14 @@ namespace PunchShooting.Battle.Scenes
                 .Subscribe(param => CreateEnemy(param))
                 .AddTo(ref _disposableBag);
             _enemyStatusLogic.OnDamageSubject
-                .Subscribe(objectStatus => _enemiesViewController.ReceivedDamage(objectStatus.InstanceId, objectStatus.Damage))
+                .Subscribe(objectStatus =>
+                {
+                    _enemiesViewController.ReceivedDamage(objectStatus.InstanceId, objectStatus.Damage);
+                    if (objectStatus.isDead)
+                    {
+                        _playerScoreLogic.AddScore(objectStatus.Score);
+                    }
+                })
                 .AddTo(ref _disposableBag);
             _enemyStatusLogic.OnDeadSubject
                 .Subscribe(instanceId => _enemiesViewController.DestroyEnemy(instanceId))

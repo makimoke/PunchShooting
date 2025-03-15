@@ -49,6 +49,7 @@ namespace PunchShooting.Battle.Systems
             //Logic
             builder.Register<InstanceIdGenerator>(Lifetime.Singleton);
             builder.Register<PlayerStatusLogic>(Lifetime.Singleton);
+            builder.Register<PlayerScoreLogic>(Lifetime.Singleton);
             builder.Register<PlayerBulletStatusLogic>(Lifetime.Singleton);
             builder.Register<EnemyStatusLogic>(Lifetime.Singleton);
             builder.Register<StageEnemyGenerator>(Lifetime.Singleton);
