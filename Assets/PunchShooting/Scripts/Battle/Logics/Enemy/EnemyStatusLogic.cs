@@ -4,7 +4,7 @@ using PunchShooting.Battle.Data.Enemy;
 using R3;
 using VContainer;
 
-namespace PunchShooting.Battle.Logic.Enemy
+namespace PunchShooting.Battle.Logics.Enemy
 {
     public class EnemyStatusLogic
     {

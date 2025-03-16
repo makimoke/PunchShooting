@@ -3,7 +3,7 @@ using PunchShooting.Battle.Data.Player;
 using R3;
 using VContainer;
 
-namespace PunchShooting.Battle.Logic.Player
+namespace PunchShooting.Battle.Logics.Player
 {
     public class PlayerStatusLogic
     {

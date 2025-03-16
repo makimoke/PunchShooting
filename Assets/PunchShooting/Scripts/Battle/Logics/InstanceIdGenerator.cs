@@ -1,4 +1,4 @@
-namespace PunchShooting.Battle.Logic
+namespace PunchShooting.Battle.Logics
 {
     //インスタンスID生成
     public class InstanceIdGenerator

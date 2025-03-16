@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using VContainer;
 
-namespace PunchShooting.Battle.Logic.Enemy
+namespace PunchShooting.Battle.Logics.Enemy
 {
     public class StageEnemyGenerator : IDisposable
     {

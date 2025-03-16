@@ -1,9 +1,9 @@
 using PunchShooting.Battle.Data;
 using PunchShooting.Battle.Data.Enemy;
 using PunchShooting.Battle.Data.Player;
-using PunchShooting.Battle.Logic;
-using PunchShooting.Battle.Logic.Enemy;
-using PunchShooting.Battle.Logic.Player;
+using PunchShooting.Battle.Logics;
+using PunchShooting.Battle.Logics.Enemy;
+using PunchShooting.Battle.Logics.Player;
 using PunchShooting.Battle.Scenes;
 using PunchShooting.Battle.Views;
 using PunchShooting.Battle.Views.Enemy;

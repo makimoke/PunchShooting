@@ -1,7 +1,7 @@
 using PunchShooting.Battle.Data.Player;
 using VContainer;
 
-namespace PunchShooting.Battle.Logic.Player
+namespace PunchShooting.Battle.Logics.Player
 {
     public class PlayerScoreLogic
     {
