@@ -1,5 +1,6 @@
 using PunchShooting.Battle.Data;
 using PunchShooting.Battle.Data.Player;
+using PunchShooting.Battle.Definitions.Player;
 using R3;
 using VContainer;
 
@@ -31,6 +32,19 @@ namespace PunchShooting.Battle.Logics.Player
             {
                 OnDeadSubject.OnNext(Unit.Default);
             }
+        }
+
+        public bool Cooldown(PlayerWeaponDefinition.WeaponIndex weaponIndex, float deltaTime, float reloadTime)
+        {
+            var weaponStatus = _playerStatusDataAccessor.WeaponStatuses[(int)weaponIndex];
+            weaponStatus.BulletCooldown -= deltaTime;
+            if (weaponStatus.BulletCooldown <= 0.0f)
+            {
+                weaponStatus.BulletCooldown = reloadTime;
+                return true;
+            }
+
+            return false;
         }
     }
 }

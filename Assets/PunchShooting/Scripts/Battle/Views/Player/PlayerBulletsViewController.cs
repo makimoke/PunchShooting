@@ -60,10 +60,9 @@ namespace PunchShooting.Battle.Views.Player
             }
         }
 
-        public void CreateBullet(long instanceId, Vector3 shipPosition)
+        public void CreateBullet(long instanceId, SpriteResourceDefinition.PrefabId prefabId, SpriteResourceDefinition.SpriteId spriteId, Vector3 position)
         {
-            var bulletViewController = _playerBulletViewCreator.CreateBullet(instanceId, SpriteResourceDefinition.PrefabId.PBul, SpriteResourceDefinition.SpriteId.PBul001,
-                new Vector3(-0.6f, 0.38f, 0.0f) + shipPosition);
+            var bulletViewController = _playerBulletViewCreator.CreateBullet(instanceId, prefabId, spriteId, position);
             _bulletViewControllers.Add(bulletViewController);
 
             //敵との衝突

@@ -22,11 +22,11 @@ namespace PunchShooting.Battle.Logics.Player
             _instanceIdGenerator = instanceIdGenerator;
         }
 
-        public ObjectStatus CreateBullet(ObjectSettings baseParam)
+        public ObjectStatus CreateBullet(PlayerBulletSettings settings)
         {
             var id = _instanceIdGenerator.GenerateId();
 
-            var status = new ObjectStatus(id, baseParam);
+            var status = new ObjectStatus(id, settings);
             _playerBulletStatusDataAccessor.AddStatus(status);
 
             return status;

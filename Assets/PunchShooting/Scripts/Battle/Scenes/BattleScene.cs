@@ -19,13 +19,10 @@ namespace PunchShooting.Battle.Scenes
 {
     public class BattleScene : MonoBehaviour
     {
-        //TODO 後で移動する
-        private const float ShotTimeInterval = 1.0f; //弾発射間隔
-        private float _bulletCounter = ShotTimeInterval;
         private DisposableBag _disposableBag;
         private EnemiesViewController _enemiesViewController;
-        private EnemySettingsDataAccessor _enemySettingsDataAccessor;
         private EnemyResourceProvider _enemyResourceProvider;
+        private EnemySettingsDataAccessor _enemySettingsDataAccessor;
         private EnemyStatusDataAccessor _enemyStatusDataAccessor;
         private EnemyStatusLogic _enemyStatusLogic;
         private PlayerBulletSettingsDataAccessor _playerBulletSettingsDataAccessor;
@@ -33,9 +30,9 @@ namespace PunchShooting.Battle.Scenes
         private PlayerBulletStatusLogic _playerBulletStatusLogic;
         private PlayerBulletsViewController _playerBulletsViewController;
         private PlayerResourceProvider _playerResourceProvider;
+        private PlayerScoreLogic _playerScoreLogic;
         private PlayerShipViewController _playerShipViewController;
         private PlayerStatusDataAccessor _playerStatusDataAccessor;
-        private PlayerScoreLogic _playerScoreLogic;
         private PlayerStatusLogic _playerStatusLogic;
         private StageEnemyGenerator _stageEnemyGenerator;
         private StageStatusDataAccessor _stageStatusDataAccessor;
@@ -186,15 +183,20 @@ namespace PunchShooting.Battle.Scenes
         //自動で弾を発射する
         private void FirePlayerBulletAutomatically(float deltaTime)
         {
-            _bulletCounter -= deltaTime;
-            if (_bulletCounter <= 0.0f)
+            //左武器
+            var settings = _playerBulletSettingsDataAccessor.FindSettings(PlayerBulletSettingsDefinition.ParamId.PBul001);
+            if (_playerStatusLogic.Cooldown(PlayerWeaponDefinition.WeaponIndex.Left, deltaTime, settings.CoolTime))
             {
-                var baseParam = _playerBulletSettingsDataAccessor.FindSettings(PlayerBulletSettingsDefinition.ParamId.PBul001);
-                var objectStatus = _playerBulletStatusLogic.CreateBullet(baseParam);
+                var objectStatus = _playerBulletStatusLogic.CreateBullet(settings);
+                _playerBulletsViewController.CreateBullet(objectStatus.InstanceId, settings.PrefabId, settings.SpriteId, settings.Position + _playerShipViewController.Position);
+            }
 
-                _playerBulletsViewController.CreateBullet(objectStatus.InstanceId, _playerShipViewController.Position);
-
-                _bulletCounter = ShotTimeInterval;
+            //右武器
+            settings = _playerBulletSettingsDataAccessor.FindSettings(PlayerBulletSettingsDefinition.ParamId.PBul002);
+            if (_playerStatusLogic.Cooldown(PlayerWeaponDefinition.WeaponIndex.Right, deltaTime, settings.CoolTime))
+            {
+                var objectStatus = _playerBulletStatusLogic.CreateBullet(settings);
+                _playerBulletsViewController.CreateBullet(objectStatus.InstanceId, settings.PrefabId, settings.SpriteId, settings.Position + _playerShipViewController.Position);
             }
         }
 

@@ -9,7 +9,7 @@ namespace PunchShooting.Battle.Data.Player
     //プレイヤ弾基本パラメータ
     public class PlayerBulletSettingsDataAccessor : IDisposable
     {
-        private readonly Dictionary<PlayerBulletSettingsDefinition.ParamId, ObjectSettings> _paramDictionary = new();
+        private readonly Dictionary<PlayerBulletSettingsDefinition.ParamId, PlayerBulletSettings> _paramDictionary = new();
 
         public void Dispose()
         {
@@ -18,16 +18,16 @@ namespace PunchShooting.Battle.Data.Player
                 Addressables.Release(settings);
             }
         }
-        
+
         public async UniTask LoadAsync()
         {
             _paramDictionary[PlayerBulletSettingsDefinition.ParamId.PBul001] =
-                await Addressables.LoadAssetAsync<ObjectSettings>("Assets/PunchShooting/SObjects/Battle/Player/so_pbul_001.asset").Task;
+                await Addressables.LoadAssetAsync<PlayerBulletSettings>("Assets/PunchShooting/SObjects/Battle/Player/so_pbul_001.asset").Task;
             _paramDictionary[PlayerBulletSettingsDefinition.ParamId.PBul002] =
-                await Addressables.LoadAssetAsync<ObjectSettings>("Assets/PunchShooting/SObjects/Battle/Player/so_pbul_002.asset").Task;
+                await Addressables.LoadAssetAsync<PlayerBulletSettings>("Assets/PunchShooting/SObjects/Battle/Player/so_pbul_002.asset").Task;
         }
 
-        public ObjectSettings FindSettings(PlayerBulletSettingsDefinition.ParamId paramId)
+        public PlayerBulletSettings FindSettings(PlayerBulletSettingsDefinition.ParamId paramId)
         {
             return _paramDictionary[paramId];
         }

@@ -8,6 +8,7 @@ namespace PunchShooting.Battle.Data.Player
         private readonly ReactiveProperty<int> _hpMaxProperty = new(0);
         private readonly ReactiveProperty<int> _hpProperty = new(0);
         public ObjectStatus Status { get; set; }
+        public PlayerWeaponStatus[] WeaponStatuses { get; private set; } = { new(), new() };
 
         public int Hp
         {
