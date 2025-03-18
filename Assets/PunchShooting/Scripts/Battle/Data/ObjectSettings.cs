@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PunchShooting.Battle.Data
 {
-    [CreateAssetMenu(fileName = "NewParam", menuName = "PunchShooting/Object")]
+    [CreateAssetMenu(fileName = "NewParam", menuName = "PunchShooting/ObjectSettings")]
     public class ObjectSettings : ScriptableObject
     {
         public string Name; // 名前
