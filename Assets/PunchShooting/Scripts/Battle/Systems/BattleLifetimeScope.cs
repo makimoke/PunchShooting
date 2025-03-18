@@ -41,11 +41,11 @@ namespace PunchShooting.Battle.Systems
             //Data
             builder.Register<PlayerScoreDataAccessor>(Lifetime.Singleton);
             builder.Register<PlayerStatusDataAccessor>(Lifetime.Singleton);
-            builder.Register<PlayerBulletBaseParamDataAccessor>(Lifetime.Singleton);
+            builder.Register<PlayerBulletSettingsDataAccessor>(Lifetime.Singleton);
             builder.Register<StageStatusDataAccessor>(Lifetime.Singleton);
             builder.Register<PlayerBulletStatusDataAccessor>(Lifetime.Singleton);
             builder.Register<EnemyStatusDataAccessor>(Lifetime.Singleton);
-            builder.Register<EnemyBaseParamDataAccessor>(Lifetime.Singleton);
+            builder.Register<EnemySettingsDataAccessor>(Lifetime.Singleton);
             //Logic
             builder.Register<InstanceIdGenerator>(Lifetime.Singleton);
             builder.Register<PlayerStatusLogic>(Lifetime.Singleton);

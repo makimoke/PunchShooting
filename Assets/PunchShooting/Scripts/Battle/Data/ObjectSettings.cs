@@ -4,7 +4,7 @@ using UnityEngine;
 namespace PunchShooting.Battle.Data
 {
     [CreateAssetMenu(fileName = "NewParam", menuName = "PunchShooting/Object")]
-    public class ObjectBaseParam : ScriptableObject
+    public class ObjectSettings : ScriptableObject
     {
         public string Name; // 名前
 

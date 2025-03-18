@@ -24,11 +24,11 @@ namespace PunchShooting.Battle.Scenes
         private float _bulletCounter = ShotTimeInterval;
         private DisposableBag _disposableBag;
         private EnemiesViewController _enemiesViewController;
-        private EnemyBaseParamDataAccessor _enemyBaseParamDataAccessor;
+        private EnemySettingsDataAccessor _enemySettingsDataAccessor;
         private EnemyResourceProvider _enemyResourceProvider;
         private EnemyStatusDataAccessor _enemyStatusDataAccessor;
         private EnemyStatusLogic _enemyStatusLogic;
-        private PlayerBulletBaseParamDataAccessor _playerBulletBaseParamDataAccessor;
+        private PlayerBulletSettingsDataAccessor _playerBulletSettingsDataAccessor;
         private PlayerBulletStatusDataAccessor _playerBulletStatusDataAccessor;
         private PlayerBulletStatusLogic _playerBulletStatusLogic;
         private PlayerBulletsViewController _playerBulletsViewController;
@@ -72,10 +72,10 @@ namespace PunchShooting.Battle.Scenes
 
         [Inject]
         public void Construct(StageStatusDataAccessor stageStatusDataAccessor,
-            PlayerBulletBaseParamDataAccessor playerBulletBaseParamDataAccessor,
+            PlayerBulletSettingsDataAccessor playerBulletSettingsDataAccessor,
             PlayerBulletStatusDataAccessor playerBulletStatusDataAccessor,
             PlayerStatusDataAccessor playerStatusDataAccessor,
-            EnemyBaseParamDataAccessor enemyBaseParamDataAccessor,
+            EnemySettingsDataAccessor enemySettingsDataAccessor,
             EnemyStatusDataAccessor enemyStatusDataAccessor,
             PlayerResourceProvider playerResourceProvider,
             EnemyResourceProvider enemyResourceProvider,
@@ -90,10 +90,10 @@ namespace PunchShooting.Battle.Scenes
             StageEnemyGenerator stageEnemyGenerator)
         {
             _stageStatusDataAccessor = stageStatusDataAccessor;
-            _playerBulletBaseParamDataAccessor = playerBulletBaseParamDataAccessor;
+            _playerBulletSettingsDataAccessor = playerBulletSettingsDataAccessor;
             _playerBulletStatusDataAccessor = playerBulletStatusDataAccessor;
             _playerStatusDataAccessor = playerStatusDataAccessor;
-            _enemyBaseParamDataAccessor = enemyBaseParamDataAccessor;
+            _enemySettingsDataAccessor = enemySettingsDataAccessor;
             _enemyStatusDataAccessor = enemyStatusDataAccessor;
             _playerResourceProvider = playerResourceProvider;
             _enemyResourceProvider = enemyResourceProvider;
@@ -120,8 +120,8 @@ namespace PunchShooting.Battle.Scenes
         {
             await _playerResourceProvider.LoadAsync();
             await _enemyResourceProvider.LoadAsync();
-            await _playerBulletBaseParamDataAccessor.LoadAsync();
-            await _enemyBaseParamDataAccessor.LoadAsync();
+            await _playerBulletSettingsDataAccessor.LoadAsync();
+            await _enemySettingsDataAccessor.LoadAsync();
             await _stageEnemyGenerator.LoadAsync();
             _playerShipViewController.Initialize();
             _playerBulletsViewController.Initialize();
@@ -189,7 +189,7 @@ namespace PunchShooting.Battle.Scenes
             _bulletCounter -= deltaTime;
             if (_bulletCounter <= 0.0f)
             {
-                var baseParam = _playerBulletBaseParamDataAccessor.FindBaseParam(PlayerBulletBaseParamDefinition.ParamId.PBul001);
+                var baseParam = _playerBulletSettingsDataAccessor.FindSettings(PlayerBulletSettingsDefinition.ParamId.PBul001);
                 var objectStatus = _playerBulletStatusLogic.CreateBullet(baseParam);
 
                 _playerBulletsViewController.CreateBullet(objectStatus.InstanceId, _playerShipViewController.Position);
@@ -200,7 +200,7 @@ namespace PunchShooting.Battle.Scenes
 
         private void CreateEnemy(StageEnemyCreateParam stageEnemyCreateParam)
         {
-            var baseParam = _enemyBaseParamDataAccessor.FindBaseParam(stageEnemyCreateParam.Id);
+            var baseParam = _enemySettingsDataAccessor.FindSettings(stageEnemyCreateParam.Id);
             var objectStatus = _enemyStatusLogic.CreateEnemy(baseParam);
             _enemiesViewController.CreateEnemy(objectStatus.InstanceId, baseParam.PrefabId, baseParam.SpriteId, stageEnemyCreateParam.Position);
         }

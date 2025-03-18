@@ -8,7 +8,7 @@ namespace PunchShooting.Battle.Data.Enemy
     [Serializable]
     public class EnemyPlaceParam
     {
-        public EnemyBaseParamDefinition.ParamId Id;
+        public EnemySettingsDefinition.ParamId Id;
         public Vector2 SquarePosition = Vector2.zero; // マス目配置位置
     }
 

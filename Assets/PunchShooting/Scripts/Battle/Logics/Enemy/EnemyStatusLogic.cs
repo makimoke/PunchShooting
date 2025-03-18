@@ -21,7 +21,7 @@ namespace PunchShooting.Battle.Logics.Enemy
             _instanceIdGenerator = instanceIdGenerator;
         }
 
-        public ObjectStatus CreateEnemy(ObjectBaseParam baseParam)
+        public ObjectStatus CreateEnemy(ObjectSettings baseParam)
         {
             var id = _instanceIdGenerator.GenerateId();
 

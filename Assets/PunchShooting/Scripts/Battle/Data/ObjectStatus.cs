@@ -10,14 +10,14 @@ namespace PunchShooting.Battle.Data
             Str = str;
         }
 
-        public ObjectStatus(long instanceId, ObjectBaseParam baseParam)
+        public ObjectStatus(long instanceId, ObjectSettings settings)
         {
             InstanceId = instanceId;
-            Hp = baseParam.Hp;
-            Str = baseParam.Str;
-            Score = baseParam.Score;
-            MoveSpeed = baseParam.MoveSpeed;
-            MoveVector = baseParam.MoveVector.normalized;
+            Hp = settings.Hp;
+            Str = settings.Str;
+            Score = settings.Score;
+            MoveSpeed = settings.MoveSpeed;
+            MoveVector = settings.MoveVector.normalized;
         }
 
         public long InstanceId { get; set; } // インスタンスID

@@ -1,7 +1,7 @@
 namespace PunchShooting.Battle.Definitions.Player
 {
     //プレイヤ弾基本パラメータ定義
-    public static class PlayerBulletBaseParamDefinition
+    public static class PlayerBulletSettingsDefinition
     {
         public enum ParamId
         {
