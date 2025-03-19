@@ -17,5 +17,10 @@ namespace PunchShooting.Battle.Logics.Player
         {
             _playerScoreDataAccessor.Score += score;
         }
+
+        public void Reset()
+        {
+            _playerScoreDataAccessor.Score = 0;
+        }
     }
 }

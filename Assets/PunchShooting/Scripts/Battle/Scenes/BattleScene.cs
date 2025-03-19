@@ -254,7 +254,15 @@ namespace PunchShooting.Battle.Scenes
         {
             protected override void Enter()
             {
+                //オブジェクト削除
+                Context._enemiesViewController.DestroyAllEnemis();
+                Context._enemyStatusLogic.RemoveAllEnemis();
+                Context._playerBulletsViewController.DestroyAllBullets();
+                Context._playerBulletStatusLogic.RemoveAllBullets();
+                //リセット
                 Context._playerStatusDataAccessor.Reset();
+                Context._stageEnemyGenerator.Reset();
+                Context._playerScoreLogic.Reset();
                 StateMachine.SendEvent((int)StateEventId.Finish);
             }
         }
