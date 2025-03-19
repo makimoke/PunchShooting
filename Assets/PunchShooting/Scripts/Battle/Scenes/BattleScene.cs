@@ -306,15 +306,16 @@ namespace PunchShooting.Battle.Scenes
 
                 Context._stageEnemyGenerator.Update(deltaTime);
 
-                /*if (Context._stageStatusDataHolder.LivingEnemyCount == 0 && Context._stageEnemyGenerator.IsCompleted)
+                if (Context._enemyStatusDataAccessor.EnemiesCount == 0 && Context._stageEnemyGenerator.IsCompleted)
                 {
+                    //敵全滅
                     StateMachine.SendEvent((int)StateEventId.Finish);
                 }
-                else if (Context._playerStatusDataHolder.Status.isDead)
+                else if (Context._playerStatusDataAccessor.Status.isDead)
                 {
-                    //Context._enemyCreator.DestoryAllEnemies();
+                    //プレイヤ死亡
                     StateMachine.SendEvent((int)StateEventId.Miss);
-                }*/
+                }
             }
         }
 

@@ -7,6 +7,7 @@ namespace PunchShooting.Battle.Data.Enemy
     {
         private readonly Dictionary<long, ObjectStatus> _statusDictionary = new();
         public IEnumerable<ObjectStatus> StatusEnumerable => _statusDictionary.Values;
+        public int EnemiesCount => _statusDictionary.Count;
 
         public void AddStatus(ObjectStatus status)
         {
