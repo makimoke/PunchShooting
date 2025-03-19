@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9183c0c32a8670d40a4df5d8c5f7eff5, type: 3}
   m_Name: so_pbul_002
   m_EditorClassIdentifier: 
-  Name: pbul_001
+  Name: pbul_002
   PrefabId: 1
-  SpriteId: 1
+  SpriteId: 2
   Hp: 10
   Str: 10
   Score: 10
-  MoveSpeed: 10
+  MoveSpeed: 4
   MoveVector: {x: 0, y: 0}
   CoolTime: 1
-  Position: {x: -0.6, y: 0.38, z: 0}
+  Position: {x: 0.6, y: 0, z: 0}

@@ -42,13 +42,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ad97610890a13bb4aaf9399383863fe1
-    m_Address: Assets/PunchShooting/SObjects/Battle/Player/so_pbul_002.asset
+  - m_GUID: ef01557fd8447f84b91393719076cb73
+    m_Address: Assets/PunchShooting/SObjects/Battle/Player/so_pbul_001.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 574d661c3e9186646b4cf90ba70c0a68
-    m_Address: Assets/PunchShooting/SObjects/Battle/Player/so_pbul_001.asset
+  - m_GUID: ad97610890a13bb4aaf9399383863fe1
+    m_Address: Assets/PunchShooting/SObjects/Battle/Player/so_pbul_002.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

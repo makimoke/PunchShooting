@@ -18,7 +18,7 @@ MonoBehaviour:
   Hp: 10
   Str: 10
   Score: 10
-  MoveSpeed: 10
+  MoveSpeed: 4
   MoveVector: {x: 0, y: 0}
   CoolTime: 1
-  Position: {x: -0.6, y: 0.38, z: 0}
+  Position: {x: -0.6, y: 0, z: 0}

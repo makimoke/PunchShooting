@@ -197,22 +197,22 @@ namespace PunchShooting.Battle.Scenes
             {
                 var objectStatus = _playerBulletStatusLogic.CreateBullet(settings);
                 _playerBulletsViewController.CreateBullet(objectStatus.InstanceId, settings.PrefabId, settings.SpriteId, settings.Position + _playerShipViewController.Position,
-                    new Vector3(0.0f, 4.0f, 0.0f));
+                    Vector3.up * settings.MoveSpeed);
             }
 
             //右武器
             settings = _playerBulletSettingsDataAccessor.FindSettings(PlayerBulletSettingsDefinition.ParamId.PBul002);
             if (_playerStatusLogic.Cooldown(PlayerWeaponDefinition.WeaponIndex.Right, deltaTime, settings.CoolTime))
             {
-                var velocity = Vector3.up * 4.0f;
+                var velocity = Vector3.up;
                 var inputLookAxis = _currentLookInputValue;
                 if (inputLookAxis.sqrMagnitude != 0.0f && inputLookAxis.x >= 0.0f)
                 {
                     //左側には撃てない
-                    velocity = inputLookAxis.normalized * 4.0f;
+                    velocity = inputLookAxis.normalized;
                 }
 
-                Debug.Log($"inputLookAxis={inputLookAxis}");
+                velocity *= settings.MoveSpeed;
 
                 var objectStatus = _playerBulletStatusLogic.CreateBullet(settings);
                 _playerBulletsViewController.CreateBullet(objectStatus.InstanceId, settings.PrefabId, settings.SpriteId, settings.Position + _playerShipViewController.Position, velocity);
