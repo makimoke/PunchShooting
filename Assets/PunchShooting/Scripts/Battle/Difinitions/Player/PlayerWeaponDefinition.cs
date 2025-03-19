@@ -10,5 +10,7 @@ namespace PunchShooting.Battle.Definitions.Player
         }
 
         public const int WeaponCount = 2;
+
+        public const float StickSquaredThreshold = 0.1f; //スティックしきい値（２乗）
     }
 }

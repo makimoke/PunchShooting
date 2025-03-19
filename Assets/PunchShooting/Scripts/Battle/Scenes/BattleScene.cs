@@ -2,6 +2,7 @@ using System;
 using Cysharp.Threading.Tasks;
 using IceMilkTea.StateMachine;
 using PunchShooting.Battle.Calculators;
+using PunchShooting.Battle.Calculators.Player;
 using PunchShooting.Battle.Data;
 using PunchShooting.Battle.Data.Enemy;
 using PunchShooting.Battle.Data.Player;
@@ -192,28 +193,18 @@ namespace PunchShooting.Battle.Scenes
         private void FirePlayerBulletAutomatically(float deltaTime)
         {
             //左武器
-            var settings = _playerBulletSettingsDataAccessor.FindSettings(PlayerBulletSettingsDefinition.ParamId.PBul001);
-            if (_playerStatusLogic.Cooldown(PlayerWeaponDefinition.WeaponIndex.Left, deltaTime, settings.CoolTime))
-            {
-                var objectStatus = _playerBulletStatusLogic.CreateBullet(settings);
-                _playerBulletsViewController.CreateBullet(objectStatus.InstanceId, settings.PrefabId, settings.SpriteId, settings.Position + _playerShipViewController.Position,
-                    Vector3.up * settings.MoveSpeed);
-            }
+            FirePlayerBullet(deltaTime, Vector2.up, PlayerWeaponDefinition.WeaponIndex.Left, PlayerBulletSettingsDefinition.ParamId.PBul001);
 
             //右武器
-            settings = _playerBulletSettingsDataAccessor.FindSettings(PlayerBulletSettingsDefinition.ParamId.PBul002);
-            if (_playerStatusLogic.Cooldown(PlayerWeaponDefinition.WeaponIndex.Right, deltaTime, settings.CoolTime))
+            FirePlayerBullet(deltaTime, _currentLookInputValue, PlayerWeaponDefinition.WeaponIndex.Right, PlayerBulletSettingsDefinition.ParamId.PBul002);
+        }
+
+        private void FirePlayerBullet(float deltaTime, Vector2 inputVector, PlayerWeaponDefinition.WeaponIndex weaponIndex, PlayerBulletSettingsDefinition.ParamId paramId)
+        {
+            var settings = _playerBulletSettingsDataAccessor.FindSettings(paramId);
+            if (_playerStatusLogic.Cooldown(weaponIndex, deltaTime, settings.CoolTime))
             {
-                var velocity = Vector2.up;
-                var inputLookAxis = _currentLookInputValue;
-                if (inputLookAxis.sqrMagnitude != 0.0f && inputLookAxis.x >= 0.0f)
-                {
-                    //左側には撃てない
-                    velocity = inputLookAxis.normalized;
-                }
-
-                velocity *= settings.MoveSpeed;
-
+                var velocity = PlayerBulletCalculator.CollectVelocity(inputVector, settings.MoveSpeed, weaponIndex);
                 var objectStatus = _playerBulletStatusLogic.CreateBullet(settings);
                 _playerBulletsViewController.CreateBullet(objectStatus.InstanceId, settings.PrefabId, settings.SpriteId, settings.Position + _playerShipViewController.Position, velocity);
             }
