@@ -204,7 +204,7 @@ namespace PunchShooting.Battle.Scenes
             settings = _playerBulletSettingsDataAccessor.FindSettings(PlayerBulletSettingsDefinition.ParamId.PBul002);
             if (_playerStatusLogic.Cooldown(PlayerWeaponDefinition.WeaponIndex.Right, deltaTime, settings.CoolTime))
             {
-                var velocity = Vector3.up;
+                var velocity = Vector2.up;
                 var inputLookAxis = _currentLookInputValue;
                 if (inputLookAxis.sqrMagnitude != 0.0f && inputLookAxis.x >= 0.0f)
                 {

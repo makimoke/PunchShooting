@@ -60,7 +60,7 @@ namespace PunchShooting.Battle.Views.Player
             }
         }
 
-        public void CreateBullet(long instanceId, SpriteResourceDefinition.PrefabId prefabId, SpriteResourceDefinition.SpriteId spriteId, Vector3 position, Vector3 velocity)
+        public void CreateBullet(long instanceId, SpriteResourceDefinition.PrefabId prefabId, SpriteResourceDefinition.SpriteId spriteId, Vector2 position, Vector2 velocity)
         {
             var bulletViewController = _playerBulletViewCreator.CreateBullet(instanceId, prefabId, spriteId, position, velocity);
             _bulletViewControllers.Add(bulletViewController);

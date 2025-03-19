@@ -32,7 +32,7 @@ namespace PunchShooting.Battle.Views.Player
             _playerInput = playerInput;
         }
 
-        public Vector3 Position => _playerShipView.Position;
+        public Vector2 Position => _playerShipView.Position;
 
         public void Dispose()
         {

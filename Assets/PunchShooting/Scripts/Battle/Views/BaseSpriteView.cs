@@ -14,7 +14,7 @@ namespace PunchShooting.Battle.Views
 
         public long InstanceId { get; set; }
 
-        public Vector3 Position => transform.localPosition;
+        public Vector2 Position => transform.localPosition;
         public SpriteRenderer SpriteRenderer => spriteRenderer;
 
         private void OnTriggerEnter2D(Collider2D collider)

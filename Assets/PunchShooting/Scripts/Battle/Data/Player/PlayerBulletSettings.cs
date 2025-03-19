@@ -7,6 +7,6 @@ namespace PunchShooting.Battle.Data.Player
     {
         [Header("Battle Properties")] public float CoolTime = 1.0f;
 
-        public Vector3 Position;
+        public Vector2 Position;
     }
 }
