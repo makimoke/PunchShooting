@@ -19,6 +19,11 @@ namespace PunchShooting.Battle.Calculators.Player
                 {
                     velocity = new Vector2(0, inputLookAxis.y);
                 }
+
+                if (velocity == Vector2.zero)
+                {
+                    velocity = Vector2.up;
+                }
             }
 
             return velocity * speed;

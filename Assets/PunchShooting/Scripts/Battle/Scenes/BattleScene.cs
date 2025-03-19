@@ -21,7 +21,8 @@ namespace PunchShooting.Battle.Scenes
 {
     public class BattleScene : MonoBehaviour
     {
-        private Vector2 _currentLookInputValue = Vector2.zero;
+        private Vector2 _currentLeftInputValue = Vector2.zero;
+        private Vector2 _currentRightInputValue = Vector2.zero;
         private DisposableBag _disposableBag;
         private EnemiesViewController _enemiesViewController;
         private EnemyResourceProvider _enemyResourceProvider;
@@ -59,9 +60,10 @@ namespace PunchShooting.Battle.Scenes
 
         private void Start()
         {
-            _playerInput.actions["Right Weapon"].started += OnLook;
-            _playerInput.actions["Right Weapon"].performed += OnLook;
-            //_playerInput.actions["Right Weapon"].canceled += OnLook;
+            _playerInput.actions["Right Weapon"].started += OnRightStick;
+            _playerInput.actions["Right Weapon"].performed += OnRightStick;
+            _playerInput.actions["Move"].started += OnLeftStick;
+            _playerInput.actions["Move"].performed += OnLeftStick;
         }
 
         private void Update()
@@ -193,10 +195,10 @@ namespace PunchShooting.Battle.Scenes
         private void FirePlayerBulletAutomatically(float deltaTime)
         {
             //左武器
-            FirePlayerBullet(deltaTime, Vector2.up, PlayerWeaponDefinition.WeaponIndex.Left, PlayerBulletSettingsDefinition.ParamId.PBul001);
+            FirePlayerBullet(deltaTime, _currentLeftInputValue, PlayerWeaponDefinition.WeaponIndex.Left, PlayerBulletSettingsDefinition.ParamId.PBul001);
 
             //右武器
-            FirePlayerBullet(deltaTime, _currentLookInputValue, PlayerWeaponDefinition.WeaponIndex.Right, PlayerBulletSettingsDefinition.ParamId.PBul002);
+            FirePlayerBullet(deltaTime, _currentRightInputValue, PlayerWeaponDefinition.WeaponIndex.Right, PlayerBulletSettingsDefinition.ParamId.PBul002);
         }
 
         private void FirePlayerBullet(float deltaTime, Vector2 inputVector, PlayerWeaponDefinition.WeaponIndex weaponIndex, PlayerBulletSettingsDefinition.ParamId paramId)
@@ -210,12 +212,15 @@ namespace PunchShooting.Battle.Scenes
             }
         }
 
-        public void OnLook(InputAction.CallbackContext context)
+        public void OnRightStick(InputAction.CallbackContext context)
         {
-            _currentLookInputValue = context.ReadValue<Vector2>();
-            Debug.Log($"OnLook:{_currentLookInputValue}");
+            _currentRightInputValue = context.ReadValue<Vector2>();
         }
 
+        public void OnLeftStick(InputAction.CallbackContext context)
+        {
+            _currentLeftInputValue = context.ReadValue<Vector2>();
+        }
 
         private void CreateEnemy(StageEnemyCreateParam stageEnemyCreateParam)
         {
