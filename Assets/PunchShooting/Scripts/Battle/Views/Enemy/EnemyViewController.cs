@@ -1,4 +1,5 @@
 using System;
+using PunchShooting.Battle.Definitions;
 using R3;
 using UnityEngine;
 using VContainer;
@@ -61,7 +62,7 @@ namespace PunchShooting.Battle.Views.Enemy
             _enemyView.AddPosition(new Vector3(0.0f, -2.0f * deltaTime, 0.0f));
 
             //画面外判定
-            if (_enemyView.Position.y <= -5.40f)
+            if (_enemyView.Position.y <= SpriteViewDefinition.OffscreenBottom)
             {
                 IsOffScreen = true;
             }
