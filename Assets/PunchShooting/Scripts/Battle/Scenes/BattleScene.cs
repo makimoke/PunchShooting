@@ -13,12 +13,14 @@ using PunchShooting.Battle.Views.Enemy;
 using PunchShooting.Battle.Views.Player;
 using R3;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using VContainer;
 
 namespace PunchShooting.Battle.Scenes
 {
     public class BattleScene : MonoBehaviour
     {
+        private Vector2 _currentLookInputValue = Vector2.zero;
         private DisposableBag _disposableBag;
         private EnemiesViewController _enemiesViewController;
         private EnemyResourceProvider _enemyResourceProvider;
@@ -29,6 +31,7 @@ namespace PunchShooting.Battle.Scenes
         private PlayerBulletStatusDataAccessor _playerBulletStatusDataAccessor;
         private PlayerBulletStatusLogic _playerBulletStatusLogic;
         private PlayerBulletsViewController _playerBulletsViewController;
+        private PlayerInput _playerInput;
         private PlayerResourceProvider _playerResourceProvider;
         private PlayerScoreLogic _playerScoreLogic;
         private PlayerShipViewController _playerShipViewController;
@@ -55,6 +58,9 @@ namespace PunchShooting.Battle.Scenes
 
         private void Start()
         {
+            _playerInput.actions["Right Weapon"].started += OnLook;
+            _playerInput.actions["Right Weapon"].performed += OnLook;
+            //_playerInput.actions["Right Weapon"].canceled += OnLook;
         }
 
         private void Update()
@@ -84,7 +90,8 @@ namespace PunchShooting.Battle.Scenes
             PlayerScoreLogic playerScoreLogic,
             PlayerBulletStatusLogic playerBulletStatusLogic,
             EnemyStatusLogic enemyStatusLogic,
-            StageEnemyGenerator stageEnemyGenerator)
+            StageEnemyGenerator stageEnemyGenerator,
+            PlayerInput playerInput)
         {
             _stageStatusDataAccessor = stageStatusDataAccessor;
             _playerBulletSettingsDataAccessor = playerBulletSettingsDataAccessor;
@@ -103,6 +110,7 @@ namespace PunchShooting.Battle.Scenes
             _playerBulletStatusLogic = playerBulletStatusLogic;
             _enemyStatusLogic = enemyStatusLogic;
             _stageEnemyGenerator = stageEnemyGenerator;
+            _playerInput = playerInput;
         }
 
         //TODO:Actionを別の方式にする？
@@ -188,17 +196,35 @@ namespace PunchShooting.Battle.Scenes
             if (_playerStatusLogic.Cooldown(PlayerWeaponDefinition.WeaponIndex.Left, deltaTime, settings.CoolTime))
             {
                 var objectStatus = _playerBulletStatusLogic.CreateBullet(settings);
-                _playerBulletsViewController.CreateBullet(objectStatus.InstanceId, settings.PrefabId, settings.SpriteId, settings.Position + _playerShipViewController.Position);
+                _playerBulletsViewController.CreateBullet(objectStatus.InstanceId, settings.PrefabId, settings.SpriteId, settings.Position + _playerShipViewController.Position,
+                    new Vector3(0.0f, 4.0f, 0.0f));
             }
 
             //右武器
             settings = _playerBulletSettingsDataAccessor.FindSettings(PlayerBulletSettingsDefinition.ParamId.PBul002);
             if (_playerStatusLogic.Cooldown(PlayerWeaponDefinition.WeaponIndex.Right, deltaTime, settings.CoolTime))
             {
+                var velocity = Vector3.up * 4.0f;
+                var inputLookAxis = _currentLookInputValue;
+                if (inputLookAxis.sqrMagnitude != 0.0f && inputLookAxis.x >= 0.0f)
+                {
+                    //左側には撃てない
+                    velocity = inputLookAxis.normalized * 4.0f;
+                }
+
+                Debug.Log($"inputLookAxis={inputLookAxis}");
+
                 var objectStatus = _playerBulletStatusLogic.CreateBullet(settings);
-                _playerBulletsViewController.CreateBullet(objectStatus.InstanceId, settings.PrefabId, settings.SpriteId, settings.Position + _playerShipViewController.Position);
+                _playerBulletsViewController.CreateBullet(objectStatus.InstanceId, settings.PrefabId, settings.SpriteId, settings.Position + _playerShipViewController.Position, velocity);
             }
         }
+
+        public void OnLook(InputAction.CallbackContext context)
+        {
+            _currentLookInputValue = context.ReadValue<Vector2>();
+            Debug.Log($"OnLook:{_currentLookInputValue}");
+        }
+
 
         private void CreateEnemy(StageEnemyCreateParam stageEnemyCreateParam)
         {

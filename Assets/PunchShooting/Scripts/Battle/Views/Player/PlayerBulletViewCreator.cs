@@ -18,7 +18,7 @@ namespace PunchShooting.Battle.Views.Player
             _playerResourceProvider = playerResourceProvider;
         }
 
-        public PlayerBulletViewController CreateBullet(long instanceId, SpriteResourceDefinition.PrefabId prefabId, SpriteResourceDefinition.SpriteId spriteId, Vector3 position)
+        public PlayerBulletViewController CreateBullet(long instanceId, SpriteResourceDefinition.PrefabId prefabId, SpriteResourceDefinition.SpriteId spriteId, Vector3 position, Vector3 velocity)
         {
             var bulletPrefab = _playerResourceProvider.FindPrefab(prefabId);
             var bulletObject = Object.Instantiate(bulletPrefab, _battleFieldView.Transform);
@@ -27,6 +27,15 @@ namespace PunchShooting.Battle.Views.Player
             playerBulletView.SetSprite(_playerResourceProvider.FindSprite(spriteId));
             playerBulletView.AdjustColliderSize();
             playerBulletView.InstanceId = instanceId;
+            playerBulletView.Velocity = velocity;
+
+            var angle = Vector3.Angle(velocity, Vector3.up);
+            if (velocity.x > 0)
+            {
+                angle *= -1;
+            }
+
+            playerBulletView.SetAngleZ(angle);
 
             var playerBulletViewController = new PlayerBulletViewController(playerBulletView);
             playerBulletViewController.Initialize();

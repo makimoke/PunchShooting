@@ -9,6 +9,8 @@ namespace PunchShooting.Battle.Views
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private BoxCollider2D boxCollider2D;
         public readonly Subject<Collider2D> OnTriggerEnterSubject = new();
+        public Vector3 Velocity { get; set; } = Vector3.zero;
+        public Vector3 Acceleration { get; set; } = Vector3.zero;
 
         public long InstanceId { get; set; }
 
@@ -23,6 +25,17 @@ namespace PunchShooting.Battle.Views
         public void AddPosition(Vector3 vector)
         {
             transform.localPosition += vector;
+        }
+
+        public void Move(float deltaTime)
+        {
+            Velocity += Acceleration * deltaTime;
+            transform.localPosition += Velocity * deltaTime;
+        }
+
+        public void SetAngleZ(float angleZ)
+        {
+            transform.localEulerAngles = new Vector3(0, 0, angleZ);
         }
 
         public void SetSprite(Sprite sprite)

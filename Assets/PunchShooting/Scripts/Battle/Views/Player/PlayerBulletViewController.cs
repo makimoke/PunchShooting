@@ -1,4 +1,5 @@
 using System;
+using PunchShooting.Battle.Definitions;
 using R3;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -54,11 +55,11 @@ namespace PunchShooting.Battle.Views.Player
         //毎フレーム呼ばれる
         public void Update(float deltaTime)
         {
-            //移動（仮）
-            _playerBulletView.AddPosition(new Vector3(0.0f, 4.0f * deltaTime, 0.0f));
+            //移動
+            _playerBulletView.Move(deltaTime);
 
-            //画面外判定
-            if (_playerBulletView.Position.y >= 5.40f)
+            //画面外判定（TODO:関数化）
+            if (_playerBulletView.Position.y >= SpriteViewDefinition.OffscreenTop)
             {
                 IsOffScreen = true;
             }
