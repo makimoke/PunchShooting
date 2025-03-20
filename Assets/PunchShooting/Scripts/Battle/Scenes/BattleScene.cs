@@ -194,7 +194,7 @@ namespace PunchShooting.Battle.Scenes
         private void FirePlayerBulletAutomatically(float deltaTime)
         {
             //左武器
-            FirePlayerBullet(deltaTime, _currentLeftInputValue, PlayerWeaponDefinition.WeaponIndex.Left, PlayerBulletSettingsDefinition.ParamId.PBul001);
+            FirePlayerBullet(deltaTime, _currentRightInputValue, PlayerWeaponDefinition.WeaponIndex.Left, PlayerBulletSettingsDefinition.ParamId.PBul001);
 
             //右武器
             FirePlayerBullet(deltaTime, _currentRightInputValue, PlayerWeaponDefinition.WeaponIndex.Right, PlayerBulletSettingsDefinition.ParamId.PBul002);

@@ -12,17 +12,17 @@ namespace PunchShooting.Battle.Calculators.Player
             var inputLookAxis = inputValue.normalized;
             if (inputLookAxis.sqrMagnitude >= PlayerWeaponDefinition.StickSquaredThreshold)
             {
-                velocity = inputLookAxis;
-
                 if ((weaponIndex == PlayerWeaponDefinition.WeaponIndex.Right && inputLookAxis.x < 0.0f) ||
                     (weaponIndex == PlayerWeaponDefinition.WeaponIndex.Left && inputLookAxis.x > 0.0f))
                 {
-                    velocity = new Vector2(0, inputLookAxis.y);
+                    if (inputLookAxis.y < 0.0f)
+                    {
+                        velocity = Vector2.down;
+                    }
                 }
-
-                if (velocity == Vector2.zero)
+                else
                 {
-                    velocity = Vector2.up;
+                    velocity = inputLookAxis;
                 }
             }
 
