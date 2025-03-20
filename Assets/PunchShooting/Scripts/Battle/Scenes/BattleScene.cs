@@ -123,8 +123,7 @@ namespace PunchShooting.Battle.Scenes
             action.Invoke();
         }
 
-        //TODO:Actionを別の方式にする？
-        private async UniTask WaitLoadResource(Action action)
+        private async UniTask WaitLoadResource()
         {
             await _playerResourceProvider.LoadAsync();
             await _enemyResourceProvider.LoadAsync();
@@ -188,7 +187,7 @@ namespace PunchShooting.Battle.Scenes
                 .Subscribe(_ => _stateMachine.SendEvent((int)StateEventId.Miss))
                 .AddTo(ref _disposableBag);
 
-            action.Invoke();
+            _stateMachine.SendEvent((int)StateEventId.Finish);
         }
 
         //自動で弾を発射する
@@ -242,7 +241,7 @@ namespace PunchShooting.Battle.Scenes
         {
             protected override void Enter()
             {
-                Context.WaitLoadResource(() => StateMachine.SendEvent((int)StateEventId.Finish)).Forget();
+                Context.WaitLoadResource().Forget();
             }
         }
 
