@@ -36,6 +36,6 @@ Assets/PunchShooting/Scripts/Battle/Scenes/BattleScene.cs
 
 ## こだわりポイント
 
-UnityのプロジェクトではMonoBehaviourに何でも書きがちですが、本プロジェクトではなるべくピュアC#で実装するように心がけました。  
+UnityのプロジェクトではMonoBehaviourに何でも書きがちですが、本プロジェクトでは出来るだけピュアC#で実装するように心がけました。  
 LogicとViewの分離を心がけてます。  
 
