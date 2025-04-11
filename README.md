@@ -30,7 +30,11 @@ ImtStateMachine
 
 自機の操作、敵の生成、ダメージ処理、バトル仮ステート
 
-## バトルシーンソース
+## バトルシーン
+
+Assets\PunchShooting\Scenes\SampleScene.unity
+
+## バトルループソース
 
 Assets/PunchShooting/Scripts/Battle/Scenes/BattleScene.cs
 
