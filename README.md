@@ -23,8 +23,8 @@ ImtStateMachine
 
 ## 操作方法
 
-・移動　左スティック or WASD
-・攻撃方向　右スティック or IJKL
+・移動　左スティック or WASD  
+・攻撃方向　右スティック or IJKL  
 
 ## 実装済み項目
 
@@ -36,5 +36,6 @@ Assets/PunchShooting/Scripts/Battle/Scenes/BattleScene.cs
 
 ## こだわりポイント
 
-UnityのプロジェクトではMonoBehaviourに何でも書きがちですが、本プロジェクトではなるべくMonoBehaviourで書かなくて良いロジックとコントローラ部をピュアC#で実装するように心がけました。
+UnityのプロジェクトではMonoBehaviourに何でも書きがちですが、本プロジェクトではなるべくピュアC#で実装するように心がけました。  
+LogicとViewの分離を心がけてます。  
 
