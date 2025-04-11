@@ -18,3 +18,16 @@ MonoBehaviour:
     EnemyPlaceParams:
     - Id: 0
       SquarePosition: {x: 0, y: 0}
+    - Id: 0
+      SquarePosition: {x: 2, y: 0}
+    - Id: 0
+      SquarePosition: {x: -2, y: 0}
+  - WaitSeconds: 3
+    SquarePosition: {x: 0, y: 0}
+    EnemyPlaceParams:
+    - Id: 0
+      SquarePosition: {x: 0, y: 0}
+    - Id: 0
+      SquarePosition: {x: 2, y: 0}
+    - Id: 0
+      SquarePosition: {x: -2, y: 0}
