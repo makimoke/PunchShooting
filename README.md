@@ -14,16 +14,11 @@ Unity2022.3.32
 
 ## 使用ライブラリ
 
-UniTask
-
-R3
-
-VContainer
-
-Addressable
-
-InputSystem
-
+UniTask  
+R3  
+VContainer  
+Addressable  
+InputSystem  
 ImtStateMachine
 
 ## 操作方法
